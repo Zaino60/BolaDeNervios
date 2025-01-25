@@ -13,6 +13,8 @@ public class LevelManager : MonoBehaviour
 
     public float AnxietyTimer { get; set; } //Ansiedad actual
 
+    [SerializeField] float zenTier = .8f, chillTier = .6f, alertedTier = .4f;
+
     //Bubbles
     public int totalBubbles;
     int bubblesLeft;
@@ -20,6 +22,7 @@ public class LevelManager : MonoBehaviour
     //State
     [SerializeField] Image hamsterStateFace;
     [SerializeField] Sprite[] sprStates;
+    [SerializeField] Image anxietyFill;
 
     void Awake()
     {
@@ -29,7 +32,7 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        AnxietyTimer = LvlTimer;
+        AnxietyTimer = LvlTimer*zenTier;
         bubblesLeft = totalBubbles;
     }
 
@@ -43,17 +46,19 @@ public class LevelManager : MonoBehaviour
             AnxietyTimer -= Time.deltaTime/2;
         }
 
-        switch(AnxietyTimer){
+        UIFillBar();
+
+        switch (AnxietyTimer){
             case float i when i > LvlTimer*.8f && i <= LvlTimer:
                 ChangeState(AnxietyLevel.Zen);
             break;
-            case float i when i > LvlTimer*.6f && i <= LvlTimer*.8f:
+            case float i when i > LvlTimer*chillTier && i <= LvlTimer*zenTier:
                 ChangeState(AnxietyLevel.Chill);
                 break;
-            case float i when i > LvlTimer*.4f && i <= LvlTimer*.6f:
+            case float i when i > LvlTimer*alertedTier && i <= LvlTimer* chillTier:
                 ChangeState(AnxietyLevel.Alerted);
                 break;
-            case float i when i > 0 && i <= LvlTimer*.4f:
+            case float i when i > 0 && i <= LvlTimer*alertedTier:
                 ChangeState(AnxietyLevel.Traumatized);
                 break;
             case 0:
@@ -66,6 +71,11 @@ public class LevelManager : MonoBehaviour
     {
         hamsterAnxietyState = level;
         hamsterStateFace.sprite = sprStates[(int)level];
+    }
+
+    void UIFillBar()
+    {
+        anxietyFill.fillAmount = 1 / (LvlTimer / AnxietyTimer);
     }
 
     public void GameOver()

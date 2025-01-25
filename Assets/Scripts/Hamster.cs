@@ -42,12 +42,13 @@ public class Hamster : MonoBehaviour
     public void TakeDamage(float damage)
     {
         LevelManager.Instance.AnxietyTimer -= damage;
-        Debug.Log($"el hamster perdió sanidad! Nueva sanidad {damage}");
+        Debug.Log($"el hamster perdió {damage} de sanidad! Nueva sanidad {LevelManager.Instance.AnxietyTimer}");
         //if (LevelManager.Instance.AnxietyTimer <= 0) LevelManager.Instance.GameOver();
     }
 
     public void Heal(float amount)
     {
-        LevelManager.Instance.AnxietyTimer = Mathf.Clamp(LevelManager.Instance.AnxietyTimer + amount, 0, LevelManager.Instance.LvlTimer); 
+        LevelManager.Instance.AnxietyTimer = Mathf.Clamp(LevelManager.Instance.AnxietyTimer + amount, 0, LevelManager.Instance.LvlTimer);
+        Debug.Log($"el hamster ganó {amount} sanidad! Nueva sanidad {LevelManager.Instance.AnxietyTimer}");
     }
 }

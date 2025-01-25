@@ -13,7 +13,7 @@ public class Hamster : MonoBehaviour
 
     void Start()
     {
-        
+        AudioManager.instance.Play("BubblePop");
     }
 
     private void Update()

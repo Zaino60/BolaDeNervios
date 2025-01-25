@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
 using UnityEngine.Audio;
-using System.Diagnostics;
 
 public class AudioManager : MonoBehaviour
 {
@@ -59,7 +58,7 @@ public class AudioManager : MonoBehaviour
         AudioClip s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
         {
-            UnityEngine.Debug.Log(s.name + " no existe");
+            Debug.Log(s.name + " no existe");
             return;
         }
         if (pitch == 0) try { _effectsSource.PlayOneShot(s, volume); } catch { }
@@ -71,6 +70,24 @@ public class AudioManager : MonoBehaviour
             newSound.GetComponent<Sound>().audioS.pitch = pitch;
         }
     }
+
+    public void Play(int id, float volume = 1f, float pitch = 0f)
+    {
+        if(id >= sounds.Length)
+        {
+            return;
+            Debug.LogError("out of bounds");
+        }
+        if (pitch == 0) try { _effectsSource.PlayOneShot(sounds[id], volume); } catch { }
+        else
+        {
+            GameObject newSound = Instantiate(_soundPrefab.gameObject);
+            newSound.GetComponent<Sound>().audioS.clip = sounds[id];
+            newSound.GetComponent<Sound>().audioS.volume = volume;
+            newSound.GetComponent<Sound>().audioS.pitch = pitch;
+        }
+    }
+
     public void ChangeLevelMusic(AudioClip clip)
     {
         if (_musicSource.clip != clip)

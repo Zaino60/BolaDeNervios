@@ -84,7 +84,7 @@ public class Hamster : MonoBehaviour
         }
         else
         {
-            //LevelManager.Instance.currentExtraTimerBeforeKill -= damage;
+            LevelManager.Instance.currentExtraTimerBeforeKill -= damage;
         }
     }
 

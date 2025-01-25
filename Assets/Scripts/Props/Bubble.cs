@@ -23,6 +23,9 @@ public class Bubble : MonoBehaviour
             AudioManager.instance.Play("BubblePop");
             
             coll.GetComponent<Hamster>().Heal(healNum);
+            LevelManager.Instance.bubblesLeft--;
+
+            LevelManager.Instance.ActivatePleasure();
 
             Destroy(this);
         }

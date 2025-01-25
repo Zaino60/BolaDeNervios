@@ -506,6 +506,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 1807536209}
   _zOffset: -4.798587
+  distance: 10
+  sensivity: 150
 --- !u!1001 &334321464
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2250,6 +2252,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5769543299199821763, guid: b036484db9037ad4e8ff36ff13e985ff,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 330585545}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

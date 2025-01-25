@@ -7,9 +7,9 @@ public class Bubble : MonoBehaviour
     [SerializeField] Mesh ExplodedBubble;
     [SerializeField] Material[] ExplodedBubbleMaterials;
 
-    void Start()
+    void Awake()
     {
-        
+        LevelManager.Instance.totalBubbles++;
     }
 
     void OnTriggerEnter(Collider coll)
@@ -20,6 +20,8 @@ public class Bubble : MonoBehaviour
             GetComponent<MeshRenderer>().materials = ExplodedBubbleMaterials;
             AudioManager.instance.Play("BubblePop");
             //coll.GetComponent<Hamster>().RestAnxiety();
+
+            Destroy(this);
         }
     }
 }

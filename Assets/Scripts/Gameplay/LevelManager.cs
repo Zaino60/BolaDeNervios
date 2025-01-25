@@ -13,6 +13,10 @@ public class LevelManager : MonoBehaviour
 
     public float AnxietyTimer { get; set; } //Ansiedad actual
 
+    //Bubbles
+    public int totalBubbles;
+    int bubblesLeft;
+
     void Awake()
     {
         if(Instance == null) Instance = this;
@@ -22,6 +26,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         AnxietyTimer = lvlTimer;
+        bubblesLeft = totalBubbles;
     }
 
     void Update()

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Bubble : MonoBehaviour
 {
-    [SerializeField]
-    Mesh ExplodedBubble;
-    
+    [SerializeField] Mesh ExplodedBubble;
+    [SerializeField] Material[] ExplodedBubbleMaterials;
+
     void Start()
     {
         
@@ -14,9 +14,12 @@ public class Bubble : MonoBehaviour
 
     void OnTriggerEnter(Collider coll)
     {
-        if(coll.gameObject.tag == "Player"){
+        if(coll.GetComponent<Hamster>())
+        {
             GetComponent<MeshFilter>().mesh = ExplodedBubble;
-            //AudioManager.Instance.Play("BubblePop");
+            GetComponent<MeshRenderer>().materials = ExplodedBubbleMaterials;
+            AudioManager.instance.Play("BubblePop");
+            //coll.GetComponent<Hamster>().RestAnxiety();
         }
     }
 }

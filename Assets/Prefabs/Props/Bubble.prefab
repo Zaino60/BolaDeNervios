@@ -118,4 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2283f35014a66c4387637c3f0806070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExplodedBubble: {fileID: 0}
+  ExplodedBubble: {fileID: -7974460874525574721, guid: 61b895bf321233745bccd73e942098de,
+    type: 3}
+  ExplodedBubbleMaterials:
+  - {fileID: 2100000, guid: df20554af5d69ff4d9ea3aa1299906b9, type: 2}

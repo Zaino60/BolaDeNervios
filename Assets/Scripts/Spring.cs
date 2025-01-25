@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Booster : MonoBehaviour
+public class Spring : MonoBehaviour
 {
     [Header("Values")]
-    [SerializeField] float _boostForce;
+    [SerializeField] float _jumpForce;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Hamster>())
         {
-            Debug.Log("boost");
-            other.GetComponent<Rigidbody>().AddForce(transform.forward * _boostForce);
+            Debug.Log("boing");
+            other.GetComponent<Rigidbody>().AddForce(transform.up * _jumpForce);
         }
     }
 }

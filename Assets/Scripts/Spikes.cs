@@ -7,13 +7,13 @@ public class Spikes : MonoBehaviour
     [Header("Values")]
     [SerializeField] float _damage;
     [SerializeField] float _knockbackForce;
-    private void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.GetComponent<Hamster>())
+        if (other.gameObject.GetComponent<Hamster>())
         {
             Debug.Log("colisioné con hamster");
-            collision.gameObject.GetComponent<Hamster>().TakeDamage(_damage);
-            collision.gameObject.GetComponent<Rigidbody>().AddForce(-transform.up * _knockbackForce);
+            other.gameObject.GetComponent<Hamster>().TakeDamage(_damage);
+            other.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * _knockbackForce, ForceMode.Impulse);
         }
     }
 }

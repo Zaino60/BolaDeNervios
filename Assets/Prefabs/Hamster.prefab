@@ -48,7 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0310fb20c9b48f745bc82ae8a572269d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 8
+  _speed: 15
+  _fallDamage: 5
+  _falYThreshold: -10
   _rb: {fileID: 4344785671453274485}
 --- !u!54 &4344785671453274485
 Rigidbody:
@@ -59,8 +61,8 @@ Rigidbody:
   m_GameObject: {fileID: 231432067075081568}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0.75
-  m_AngularDrag: 0.05
+  m_Drag: 1.25
+  m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -134,7 +136,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 231432067075081568}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 8d538a7e7d67092439b0a5e7a572693d, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

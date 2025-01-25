@@ -7,14 +7,18 @@ public class Hamster : MonoBehaviour
 {
     [Header("Values")]
     [SerializeField] float _speed = .25f;
-
+    [SerializeField] float _fallDamage = 5f;
+    [SerializeField] float _falYThreshold = -5f;
     [Header("References")]
     [SerializeField] Rigidbody _rb;
+
+    Vector3 _checkpoint;
 
     void Start()
     {
         AudioManager.instance.Play("BubblePop");
         TakeDamage(1f);
+        _checkpoint = transform.position;
     }
 
     private void Update()
@@ -23,6 +27,7 @@ public class Hamster : MonoBehaviour
 #if UNITY_EDITOR
         //Cheatcodes, solo funcionan en el editor
         if (Input.GetKeyDown(KeyCode.Return)) UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        if (Input.GetKeyDown(KeyCode.Space)) _rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
         //Con Enter restarteo la escena, para evitar estar poniendo y sacando play todo el tiempo
 #endif
     }
@@ -37,6 +42,14 @@ public class Hamster : MonoBehaviour
     {
         Vector3 dir = new Vector3(-Input.GetAxis("Vertical"), 0f, Input.GetAxis("Horizontal")).normalized;
         _rb.AddForce(dir * _speed);
+
+        if (transform.position.y <= _falYThreshold) PlayerFellOutOfMap();
+    }
+
+    void PlayerFellOutOfMap()
+    {
+        TakeDamage(_fallDamage);
+        transform.position = _checkpoint;
     }
 
     public void TakeDamage(float damage)
@@ -50,5 +63,10 @@ public class Hamster : MonoBehaviour
     {
         LevelManager.Instance.AnxietyTimer = Mathf.Clamp(LevelManager.Instance.AnxietyTimer + amount, 0, LevelManager.Instance.LvlTimer);
         Debug.Log($"el hamster ganó {amount} sanidad! Nueva sanidad {LevelManager.Instance.AnxietyTimer}");
+    }
+
+    public void SetCheckpoint(Vector3 position)
+    {
+        _checkpoint = position;
     }
 }

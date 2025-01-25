@@ -126,8 +126,12 @@ public class LevelManager : MonoBehaviour
     {
         hamsterStateFace.sprite = sprStates[face];
     }
+    public void ActivatePleasure()
+    {
+        StartCoroutine(Pleasure());
+    }
 
-    public IEnumerator Pleasure()
+    IEnumerator Pleasure()
     {
         int actualFace = (int)HamsterAnxietyState;
         ChangeStateFace(5);

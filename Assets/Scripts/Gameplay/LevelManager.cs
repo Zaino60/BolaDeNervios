@@ -9,8 +9,7 @@ public class LevelManager : MonoBehaviour
 
     AnxietyLevel hamsterAnxietyState;
 
-    [SerializeField]
-    float lvlTimer; //Valor inicial
+    [field:SerializeField] public float LvlTimer { get; set; } //Valor inicial
 
     public float AnxietyTimer { get; set; } //Ansiedad actual
 
@@ -30,7 +29,7 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        AnxietyTimer = lvlTimer;
+        AnxietyTimer = LvlTimer;
         bubblesLeft = totalBubbles;
     }
 
@@ -45,16 +44,16 @@ public class LevelManager : MonoBehaviour
         }
 
         switch(AnxietyTimer){
-            case float i when i > lvlTimer*.8f && i <= lvlTimer:
+            case float i when i > LvlTimer*.8f && i <= LvlTimer:
                 ChangeState(AnxietyLevel.Zen);
             break;
-            case float i when i > lvlTimer*.6f && i <= lvlTimer*.8f:
+            case float i when i > LvlTimer*.6f && i <= LvlTimer*.8f:
                 ChangeState(AnxietyLevel.Chill);
                 break;
-            case float i when i > lvlTimer*.4f && i <= lvlTimer*.6f:
+            case float i when i > LvlTimer*.4f && i <= LvlTimer*.6f:
                 ChangeState(AnxietyLevel.Alerted);
                 break;
-            case float i when i > 0 && i <= lvlTimer*.4f:
+            case float i when i > 0 && i <= LvlTimer*.4f:
                 ChangeState(AnxietyLevel.Traumatized);
                 break;
             case 0:

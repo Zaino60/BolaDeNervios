@@ -48,6 +48,6 @@ public class Hamster : MonoBehaviour
 
     public void Heal(float amount)
     {
-        //LevelManager.Instance.AnxietyTimer = Mathf.Clamp(LevelManager.Instance.AnxietyTimer + amount, 0, LevelManager.Instance.Lvltimer); 
+        LevelManager.Instance.AnxietyTimer = Mathf.Clamp(LevelManager.Instance.AnxietyTimer + amount, 0, LevelManager.Instance.LvlTimer); 
     }
 }

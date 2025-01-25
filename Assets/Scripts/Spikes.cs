@@ -11,6 +11,7 @@ public class Spikes : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Hamster>())
         {
+            Debug.Log("colisioné con hamster");
             collision.gameObject.GetComponent<Hamster>().TakeDamage(_damage);
             collision.gameObject.GetComponent<Rigidbody>().AddForce(-transform.up * _knockbackForce);
         }

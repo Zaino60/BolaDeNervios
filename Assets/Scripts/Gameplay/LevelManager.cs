@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Image anxietyFill;
     float stateMultiplier, stateMultiplierNormal = 1, stateMultiplierSlow = .75f;
     float extraTimerBeforeKill = 2;
-    public float currentExtraTimerBeforeKill { get; set; };
+    public float currentExtraTimerBeforeKill { get; set; }
     Animator hamsterStateAnim;
 
 

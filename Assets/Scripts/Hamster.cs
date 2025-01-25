@@ -25,6 +25,7 @@ public class Hamster : MonoBehaviour
         AudioManager.instance.Play("BubblePop");
         TakeDamage(1f);
         _checkpoint = transform.position;
+        if (LevelManager.Instance) LevelManager.Instance.OnStateChange += StateAnimationCheck;
     }
 
     private void Update()
@@ -45,6 +46,7 @@ public class Hamster : MonoBehaviour
     {
         _anim.SetBool("Running", (_zAxis != 0 || _xAxis != 0));
         Debug.Log($"Running: {(_zAxis != 0 || _xAxis != 0)}");
+        Debug.Log($"Injured: {_anim.GetBool("Injured")}");
         Movement();
         MeshRotation();
     }
@@ -84,7 +86,7 @@ public class Hamster : MonoBehaviour
         }
         else
         {
-            //LevelManager.Instance.currentExtraTimerBeforeKill -= damage;
+            LevelManager.Instance.currentExtraTimerBeforeKill -= damage;
         }
     }
 
@@ -97,5 +99,27 @@ public class Hamster : MonoBehaviour
     public void SetCheckpoint(Vector3 position)
     {
         _checkpoint = position;
+    }
+
+    void StateAnimationCheck(AnxietyLevel state)
+    {
+        switch (state)
+        {
+            case AnxietyLevel.Zen:
+                _anim.SetBool("Injured", false);
+                break;
+            case AnxietyLevel.Chill:
+                _anim.SetBool("Injured", false);
+                break;
+            case AnxietyLevel.Alerted:
+                _anim.SetBool("Injured", true);
+                break;
+            case AnxietyLevel.Traumatized:
+                _anim.SetBool("Injured", true);
+                break;
+            case AnxietyLevel.Dead:
+                _anim.SetBool("Injured", true);
+                break;
+        }
     }
 }

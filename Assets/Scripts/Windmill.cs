@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Windmill : MonoBehaviour
 {
-    [SerializeField] float _windForce;
+    [SerializeField] float _windForce = 5f;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        
+        if (other.GetComponent<Hamster>()) other.GetComponent<Rigidbody>().AddForce(transform.up * _windForce);
     }
 }

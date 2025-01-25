@@ -4,42 +4,53 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    float lvlTimer;
-    float hamsterAnxietyNum;
-    string hamsterAnxietyState;
+    public static LevelManager Instance;
+
+    AnxietyLevel hamsterAnxietyState;
+
+    [SerializeField]
+    float lvlTimer; //Valor inicial
+
+    public float AnxietyTimer; //Ansiedad actual
+
+    void Awake()
+    {
+        if(Instance == null) Instance = this;
+        else Destroy(this.gameObject);
+    }
 
     void Start()
     {
-        
+        AnxietyTimer = lvlTimer;
     }
 
     void Update()
     {
-        lvlTimer -= Time.deltaTime;
-
-        if(hamsterAnxietyNum < 70){
-            hamsterAnxietyNum -= Time.deltaTime;
+        //
+        if(AnxietyTimer > 20){
+            AnxietyTimer -= Time.deltaTime;
         }
         else{
-            hamsterAnxietyNum -= Time.deltaTime/2;
+            AnxietyTimer -= Time.deltaTime/2;
         }
 
-        switch(hamsterAnxietyNum){
-            case float i when i > 0 && i <= 20:
-                hamsterAnxietyState = "Zen";
+        switch(AnxietyTimer){
+            case float i when i > lvlTimer*.8f && i <= lvlTimer:
+                hamsterAnxietyState = AnxietyLevel.Zen;
             break;
-            case float i when i > 20 && i <= 50:
-                hamsterAnxietyState = "Chill";
+            case float i when i > lvlTimer*.6f && i <= lvlTimer*.8f:
+                hamsterAnxietyState = AnxietyLevel.Chill;
             break;
-            case float i when i > 50 && i <= 70:
-                hamsterAnxietyState = "Alertado";
+            case float i when i > lvlTimer*.4f && i <= lvlTimer*.6f:
+                hamsterAnxietyState = AnxietyLevel.Alerted;
             break;
-            case float i when i > 70 && i <= 99:
-                hamsterAnxietyState = "Traumado";
+            case float i when i > 0 && i <= lvlTimer*.4f:
+                hamsterAnxietyState = AnxietyLevel.Traumatized;
             break;
-            case 100:
+            case 0:
                 //Game Over
             break;
         }
     }
 }
+public enum AnxietyLevel{Zen, Chill, Alerted, Traumatized}

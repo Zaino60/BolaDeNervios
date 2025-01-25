@@ -75,8 +75,8 @@ public class AudioManager : MonoBehaviour
     {
         if(id >= sounds.Length)
         {
-            return;
             Debug.LogError("out of bounds");
+            return;
         }
         if (pitch == 0) try { _effectsSource.PlayOneShot(sounds[id], volume); } catch { }
         else

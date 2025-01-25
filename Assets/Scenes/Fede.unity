@@ -157,6 +157,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
   _zOffset: -4.798587
+  distance: 10
+  sensivity: 500
 --- !u!114 &23080173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1619,6 +1621,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536769777341539569, guid: 423bf92b6e5218942914135cd90e3279,
+        type: 3}
+      propertyPath: _rotSpeed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10340,7 +10347,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473357365}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4de3eefcc77fd9449971c8e441dc8d85, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -22797,7 +22804,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1291648897}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4de3eefcc77fd9449971c8e441dc8d85, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour
     //State
     [SerializeField] Image hamsterStateFace;
     [SerializeField] Sprite[] sprStates;
+    [SerializeField] Image anxietyFill;
 
     void Awake()
     {
@@ -43,7 +44,9 @@ public class LevelManager : MonoBehaviour
             AnxietyTimer -= Time.deltaTime/2;
         }
 
-        switch(AnxietyTimer){
+        UIFillBar();
+
+        switch (AnxietyTimer){
             case float i when i > LvlTimer*.8f && i <= LvlTimer:
                 ChangeState(AnxietyLevel.Zen);
             break;
@@ -66,6 +69,11 @@ public class LevelManager : MonoBehaviour
     {
         hamsterAnxietyState = level;
         hamsterStateFace.sprite = sprStates[(int)level];
+    }
+
+    void UIFillBar()
+    {
+        anxietyFill.fillAmount = 1 / (LvlTimer / AnxietyTimer);
     }
 
     public void GameOver()

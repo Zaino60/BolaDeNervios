@@ -138,6 +138,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f79d14cb2cfc9ba4694a7275da4ab03e, type: 3}
   - {fileID: 21300000, guid: 07260c0b3eb731243aa40eb53607d8bb, type: 3}
   - {fileID: 21300000, guid: 71efa1e65c134da4890b0fb7ac53e2e8, type: 3}
+  - {fileID: 21300000, guid: ac91be9671c0475418467ff8531eb3dd, type: 3}
   anxietyFill: {fileID: 4797923769292564850}
 --- !u!223 &5769543299199821763
 Canvas:

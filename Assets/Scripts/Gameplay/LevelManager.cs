@@ -24,6 +24,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Sprite[] sprStates;
     [SerializeField] Image anxietyFill;
     float stateMultiplier, stateMultiplierNormal = 1, stateMultiplierSlow = .75f;
+    float extraTimerBeforeKill = 2, currentExtraTimerBeforeKill;
+    Animator hamsterStateAnim;
+
 
     void Awake()
     {
@@ -36,6 +39,7 @@ public class LevelManager : MonoBehaviour
         AnxietyTimer = LvlTimer*zenTier;
         stateMultiplier = stateMultiplierNormal;
         bubblesLeft = totalBubbles;
+        hamsterStateAnim = hamsterStateFace.gameObject.GetComponent<Animator>();
     }
 
     void Update()
@@ -61,27 +65,44 @@ public class LevelManager : MonoBehaviour
                 if (hamsterAnxietyState != AnxietyLevel.Alerted)
                 {
                     ChangeState(AnxietyLevel.Alerted);
-                    stateMultiplier = stateMultiplierNormal;
                 }
                 break;
             case float i when i > 0 && i <= LvlTimer*alertedTier:
                 if (hamsterAnxietyState != AnxietyLevel.Traumatized)
                 {
                     ChangeState(AnxietyLevel.Traumatized);
-                    stateMultiplier = stateMultiplierSlow;
                 }
                 break;
-            case 0:
-                GameOver();
+            case float i when i <= 0 && hamsterAnxietyState != AnxietyLevel.Dead:
+                LvlTimer = 0;
+                currentExtraTimerBeforeKill -= Time.deltaTime;
+                print(currentExtraTimerBeforeKill);
+                if (currentExtraTimerBeforeKill <= 0)
+                {
+                    GameOver();
+
+                }
             break;
         }
     }
 
     void ChangeState(AnxietyLevel level)
     {
+        if (hamsterAnxietyState == AnxietyLevel.Traumatized && level == AnxietyLevel.Alerted)
+        {
+            stateMultiplier = stateMultiplierNormal;
+            hamsterStateFace.gameObject.GetComponent<Animator>().speed = 1;
+        }
+        else if (hamsterAnxietyState == AnxietyLevel.Alerted && level == AnxietyLevel.Traumatized)
+        {
+            stateMultiplier = stateMultiplierSlow;
+            hamsterStateAnim.speed = 1.5f;
+            currentExtraTimerBeforeKill = extraTimerBeforeKill;
+        }
+
         hamsterAnxietyState = level;
         hamsterStateFace.sprite = sprStates[(int)level];
-        hamsterStateFace.gameObject.GetComponent<Animator>().Play(Animator.StringToHash("HamsterStateChange"));
+        hamsterStateAnim.Play(Animator.StringToHash("HamsterStateChange"));
     }
 
     void UIFillBar()
@@ -91,6 +112,8 @@ public class LevelManager : MonoBehaviour
 
     public void GameOver()
     {
-
+        print("Game Over!");
+        ChangeState(AnxietyLevel.Dead);
+        hamsterStateAnim.speed = 0;
     }
 }

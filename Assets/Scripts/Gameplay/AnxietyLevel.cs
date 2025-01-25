@@ -1,1 +1,1 @@
-﻿public enum AnxietyLevel{Zen, Chill, Alerted, Traumatized}
+﻿public enum AnxietyLevel{Zen, Chill, Alerted, Traumatized, Dead}

@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
 
-    AnxietyLevel hamsterAnxietyState;
+    public AnxietyLevel HamsterAnxietyState { get; set; }
 
     [field:SerializeField] public float LvlTimer { get; set; } //Valor inicial
 
@@ -17,7 +18,7 @@ public class LevelManager : MonoBehaviour
 
     //Bubbles
     public int totalBubbles;
-    int bubblesLeft;
+    public int bubblesLeft { get; set; }
 
     //State
     [SerializeField] Image hamsterStateFace;
@@ -27,6 +28,8 @@ public class LevelManager : MonoBehaviour
     float extraTimerBeforeKill = 2;
     public float currentExtraTimerBeforeKill { get; set; }
     Animator hamsterStateAnim;
+
+    public Action<AnxietyLevel> OnStateChange = delegate { };
 
 
     void Awake()
@@ -51,30 +54,30 @@ public class LevelManager : MonoBehaviour
 
         switch (AnxietyTimer){
             case float i when i > LvlTimer*.8f && i <= LvlTimer:
-                if(hamsterAnxietyState != AnxietyLevel.Zen)
+                if(HamsterAnxietyState != AnxietyLevel.Zen)
                 {
                     ChangeState(AnxietyLevel.Zen);
                 }
             break;
             case float i when i > LvlTimer*chillTier && i <= LvlTimer*zenTier:
-                if (hamsterAnxietyState != AnxietyLevel.Chill)
+                if (HamsterAnxietyState != AnxietyLevel.Chill)
                 {
                     ChangeState(AnxietyLevel.Chill);
                 }
                 break;
             case float i when i > LvlTimer*alertedTier && i <= LvlTimer* chillTier:
-                if (hamsterAnxietyState != AnxietyLevel.Alerted)
+                if (HamsterAnxietyState != AnxietyLevel.Alerted)
                 {
                     ChangeState(AnxietyLevel.Alerted);
                 }
                 break;
             case float i when i > 0 && i <= LvlTimer*alertedTier:
-                if (hamsterAnxietyState != AnxietyLevel.Traumatized)
+                if (HamsterAnxietyState != AnxietyLevel.Traumatized)
                 {
                     ChangeState(AnxietyLevel.Traumatized);
                 }
                 break;
-            case float i when i <= 0 && hamsterAnxietyState != AnxietyLevel.Dead:
+            case float i when i <= 0 && HamsterAnxietyState != AnxietyLevel.Dead:
                 LvlTimer = 0;
                 currentExtraTimerBeforeKill -= Time.deltaTime;
                 print(currentExtraTimerBeforeKill);
@@ -89,20 +92,21 @@ public class LevelManager : MonoBehaviour
 
     void ChangeState(AnxietyLevel level)
     {
-        if (hamsterAnxietyState == AnxietyLevel.Traumatized && level == AnxietyLevel.Alerted)
+        if (HamsterAnxietyState == AnxietyLevel.Traumatized && level == AnxietyLevel.Alerted)
         {
             stateMultiplier = stateMultiplierNormal;
             hamsterStateFace.gameObject.GetComponent<Animator>().speed = 1;
         }
-        else if (hamsterAnxietyState == AnxietyLevel.Alerted && level == AnxietyLevel.Traumatized)
+        else if (HamsterAnxietyState == AnxietyLevel.Alerted && level == AnxietyLevel.Traumatized)
         {
             stateMultiplier = stateMultiplierSlow;
             hamsterStateAnim.speed = 1.5f;
             currentExtraTimerBeforeKill = extraTimerBeforeKill;
         }
 
-        hamsterAnxietyState = level;
-        hamsterStateFace.sprite = sprStates[(int)level];
+        OnStateChange(level);
+        HamsterAnxietyState = level;
+        ChangeStateFace((int)level);
         hamsterStateAnim.Play(Animator.StringToHash("HamsterStateChange"));
     }
 
@@ -116,5 +120,22 @@ public class LevelManager : MonoBehaviour
         print("Game Over!");
         ChangeState(AnxietyLevel.Dead);
         hamsterStateAnim.speed = 0;
+    }
+
+    public void ChangeStateFace(int face)
+    {
+        hamsterStateFace.sprite = sprStates[face];
+    }
+    public void ActivatePleasure()
+    {
+        StartCoroutine(Pleasure());
+    }
+
+    IEnumerator Pleasure()
+    {
+        int actualFace = (int)HamsterAnxietyState;
+        ChangeStateFace(5);
+        yield return new WaitForSeconds(.50f);
+        ChangeStateFace(actualFace);
     }
 }

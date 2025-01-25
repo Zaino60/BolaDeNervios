@@ -11,7 +11,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     float lvlTimer; //Valor inicial
 
-    public float AnxietyTimer; //Ansiedad actual
+    public float AnxietyTimer { get; set; } //Ansiedad actual
 
     void Awake()
     {

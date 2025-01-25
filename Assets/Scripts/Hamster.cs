@@ -14,6 +14,7 @@ public class Hamster : MonoBehaviour
     void Start()
     {
         AudioManager.instance.Play("BubblePop");
+        TakeDamage(1f);
     }
 
     private void Update()
@@ -35,5 +36,10 @@ public class Hamster : MonoBehaviour
     {
         Vector3 dir = new Vector3(-Input.GetAxis("Vertical"), 0f, Input.GetAxis("Horizontal")).normalized;
         _rb.AddForce(dir * _speed);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Debug.Log(LevelManager.Instance.AnxietyTimer);
     }
 }

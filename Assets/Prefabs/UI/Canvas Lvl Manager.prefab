@@ -135,10 +135,10 @@ MonoBehaviour:
   hamsterStateFace: {fileID: 5581640157209033576}
   sprStates:
   - {fileID: 21300000, guid: cc5ac7962b9fb1844a424b10c41bc225, type: 3}
-  - {fileID: 21300000, guid: f79d14cb2cfc9ba4694a7275da4ab03e, type: 3}
-  - {fileID: 21300000, guid: 07260c0b3eb731243aa40eb53607d8bb, type: 3}
-  - {fileID: 21300000, guid: 71efa1e65c134da4890b0fb7ac53e2e8, type: 3}
+  - {fileID: 21300000, guid: 5fcc34e09660df44fbcd9c11ba2c92ea, type: 3}
+  - {fileID: 21300000, guid: 9df4207cf2b22b041b5e05c42316de62, type: 3}
   - {fileID: 21300000, guid: ac91be9671c0475418467ff8531eb3dd, type: 3}
+  - {fileID: 21300000, guid: c88d71e432c481648bb57497ac5e892e, type: 3}
   anxietyFill: {fileID: 4797923769292564850}
 --- !u!223 &5769543299199821763
 Canvas:
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 80b8ee8ca02d4bd4aa19487f17f5feb1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5fcc34e09660df44fbcd9c11ba2c92ea, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

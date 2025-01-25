@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bubble : MonoBehaviour
 {
+    [SerializeField]int healNum = 2;
+
     [SerializeField] Mesh ExplodedBubble;
     [SerializeField] Material[] ExplodedBubbleMaterials;
 
@@ -19,7 +21,8 @@ public class Bubble : MonoBehaviour
             GetComponent<MeshFilter>().mesh = ExplodedBubble;
             GetComponent<MeshRenderer>().materials = ExplodedBubbleMaterials;
             AudioManager.instance.Play("BubblePop");
-            //coll.GetComponent<Hamster>().RestAnxiety();
+            
+            coll.GetComponent<Hamster>().Heal(healNum);
 
             Destroy(this);
         }

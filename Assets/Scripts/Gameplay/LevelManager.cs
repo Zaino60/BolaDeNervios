@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class LevelManager : MonoBehaviour
     //Bubbles
     public int totalBubbles;
     int bubblesLeft;
+
+    //State
+    [SerializeField] Image hamsterStateFace;
+    [SerializeField] Sprite[] sprStates;
 
     void Awake()
     {
@@ -41,21 +46,31 @@ public class LevelManager : MonoBehaviour
 
         switch(AnxietyTimer){
             case float i when i > lvlTimer*.8f && i <= lvlTimer:
-                hamsterAnxietyState = AnxietyLevel.Zen;
+                ChangeState(AnxietyLevel.Zen);
             break;
             case float i when i > lvlTimer*.6f && i <= lvlTimer*.8f:
-                hamsterAnxietyState = AnxietyLevel.Chill;
-            break;
+                ChangeState(AnxietyLevel.Chill);
+                break;
             case float i when i > lvlTimer*.4f && i <= lvlTimer*.6f:
-                hamsterAnxietyState = AnxietyLevel.Alerted;
-            break;
+                ChangeState(AnxietyLevel.Alerted);
+                break;
             case float i when i > 0 && i <= lvlTimer*.4f:
-                hamsterAnxietyState = AnxietyLevel.Traumatized;
-            break;
+                ChangeState(AnxietyLevel.Traumatized);
+                break;
             case 0:
-                //Game Over
+                GameOver();
             break;
         }
     }
+
+    void ChangeState(AnxietyLevel level)
+    {
+        hamsterAnxietyState = level;
+        hamsterStateFace.sprite = sprStates[(int)level];
+    }
+
+    public void GameOver()
+    {
+
+    }
 }
-public enum AnxietyLevel{Zen, Chill, Alerted, Traumatized}

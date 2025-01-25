@@ -19,6 +19,7 @@ public class Hamster : MonoBehaviour
 
     private void Update()
     {
+        //if (Input.GetKeyDown(KeyCode.1)) TakeDamage(1f);
 #if UNITY_EDITOR
         //Cheatcodes, solo funcionan en el editor
         if (Input.GetKeyDown(KeyCode.Return)) UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
@@ -41,5 +42,10 @@ public class Hamster : MonoBehaviour
     public void TakeDamage(float damage)
     {
         Debug.Log(LevelManager.Instance.AnxietyTimer);
+    }
+
+    public void Heal(float damage)
+    {
+        //LevelManager.Instance.AnxietyTimer
     }
 }

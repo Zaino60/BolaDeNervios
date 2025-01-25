@@ -1,0 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Bubble : MonoBehaviour
+{
+    [SerializeField] Mesh ExplodedBubble;
+    [SerializeField] Material[] ExplodedBubbleMaterials;
+
+    void Start()
+    {
+        
+    }
+
+    void OnTriggerEnter(Collider coll)
+    {
+        if(coll.GetComponent<Hamster>())
+        {
+            GetComponent<MeshFilter>().mesh = ExplodedBubble;
+            GetComponent<MeshRenderer>().materials = ExplodedBubbleMaterials;
+            AudioManager.instance.Play("BubblePop");
+            //coll.GetComponent<Hamster>().RestAnxiety();
+        }
+    }
+}

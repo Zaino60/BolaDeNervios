@@ -12,10 +12,11 @@ public class Bubble : MonoBehaviour
         
     }
 
-    void OnTriggerEnter2D(Collider2D coll)
+    void OnTriggerEnter(Collider coll)
     {
         if(coll.gameObject.tag == "Player"){
             GetComponent<MeshFilter>().mesh = ExplodedBubble;
+            //AudioManager.Instance.Play("BubblePop");
         }
     }
 }

@@ -50,12 +50,15 @@ MonoBehaviour:
   _initSFXVol: 1
   _musicSource: {fileID: 9040566682697219937}
   _effectsSource: {fileID: 1734208473747310037}
-  _musicMixer: {fileID: 0}
-  _sfxMixer: {fileID: 0}
   _soundPrefab: {fileID: 6369915024394732600, guid: ab0eb4b63c8dd76459e6353891a3c796,
     type: 3}
   sounds:
-  - {fileID: 8300000, guid: a4480bc6e31b00242ad697bf10ee7e5f, type: 3}
+  - {fileID: 8300000, guid: c4a57b816cc510f4fa185ce7d14e72e8, type: 3}
+  - {fileID: 8300000, guid: 070b30f91c0c0ed4a965c0a9908a1720, type: 3}
+  - {fileID: 8300000, guid: 7628ece5a30c1e04f806515e766c08d1, type: 3}
+  - {fileID: 8300000, guid: c5b3d2d9e83559e429dfecad9902865a, type: 3}
+  - {fileID: 8300000, guid: c3ab36cc9d10a8c45b0c862a759d369f, type: 3}
+  - {fileID: 8300000, guid: 63972dbedb2f3bd40930cf60c545ee83, type: 3}
 --- !u!1 &6317903384961318748
 GameObject:
   m_ObjectHideFlags: 0

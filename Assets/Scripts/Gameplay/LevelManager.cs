@@ -133,9 +133,13 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator Pleasure()
     {
-        int actualFace = (int)HamsterAnxietyState;
-        ChangeStateFace(5);
-        yield return new WaitForSeconds(.50f);
-        ChangeStateFace(actualFace);
+        if (!hamsterStateAnim.GetCurrentAnimatorStateInfo(0).IsName("HamsterPleasure"))
+        {
+            hamsterStateAnim.Play(Animator.StringToHash("HamsterPleasure"));
+            int actualFace = (int)HamsterAnxietyState;
+            ChangeStateFace(5);
+            yield return new WaitForSeconds(1);
+            ChangeStateFace(actualFace);
+        }
     }
 }

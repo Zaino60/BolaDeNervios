@@ -25,7 +25,7 @@ public class Bubble : MonoBehaviour
             coll.GetComponent<Hamster>().Heal(healNum);
             LevelManager.Instance.bubblesLeft--;
 
-            StartCoroutine(LevelManager.Instance.Pleasure());
+            LevelManager.Instance.ActivatePleasure();
 
             Destroy(this);
         }

@@ -52,6 +52,7 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = false;
         AnxietyTimer = LvlTimer*zenTier;
         stateMultiplier = stateMultiplierNormal;
         bubblesLeft = totalBubbles;
@@ -172,6 +173,7 @@ public class LevelManager : MonoBehaviour
 
     public void WinScreenAppear()
     {
+        Cursor.visible = true;
         _winScreen.SetActive(true);
     }
 
@@ -192,6 +194,7 @@ public class LevelManager : MonoBehaviour
 
     public void DeadScreenAppear()
     {
+        Cursor.visible = true;
         _deadScreen.SetActive(true);
     }
 

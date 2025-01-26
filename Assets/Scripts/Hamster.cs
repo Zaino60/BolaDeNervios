@@ -15,6 +15,7 @@ public class Hamster : MonoBehaviour
     [SerializeField] Rigidbody _rb;
     [SerializeField] GameObject _hamsterMesh;
     [SerializeField] Animator _anim;
+    [SerializeField] GameObject _brokenBallPrefab;
 
     Vector3 _checkpoint;
     Vector3 _lastValidDir;
@@ -63,6 +64,7 @@ public class Hamster : MonoBehaviour
         //Cheatcodes, solo funcionan en el editor
         if (Input.GetKeyDown(KeyCode.Return)) UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         if (Input.GetKeyDown(KeyCode.Space)) _rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
+        if (Input.GetKeyDown(KeyCode.F)) TakeDamage(100f);
         //Con Enter restarteo la escena, para evitar estar poniendo y sacando play todo el tiempo
 #endif
     }
@@ -222,6 +224,9 @@ public class Hamster : MonoBehaviour
     void OnGameOver()
     {
         Debug.Log("ongameover");
+        _rb.velocity = Vector3.zero;
+        GetComponent<Renderer>().enabled = false;
+        Instantiate(_brokenBallPrefab, transform.position, Quaternion.identity);
         _dead = true;
         _anim.SetTrigger("Dead");
     }

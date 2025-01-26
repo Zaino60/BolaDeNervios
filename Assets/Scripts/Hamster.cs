@@ -26,7 +26,9 @@ public class Hamster : MonoBehaviour
 
     //Sound
     [SerializeField] AudioClip[] sounds;
-    AudioSource AS;
+    AudioSource as_ball, as_hamster;
+
+    bool isTalking;
 
 
     private void Awake()
@@ -42,7 +44,8 @@ public class Hamster : MonoBehaviour
             LevelManager.Instance.OnGameOver += OnGameOver;
         }
 
-        AS = GetComponent<AudioSource>();
+        as_ball = GetComponent<AudioSource>();
+        as_hamster = transform.GetChild(0).GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -50,6 +53,11 @@ public class Hamster : MonoBehaviour
         _xAxis = Input.GetAxis("Horizontal");
         _zAxis = Input.GetAxis("Vertical");
         if (transform.position.y <= _falYThreshold) PlayerFellOutOfMap();
+
+        if(isTalking && !as_hamster.isPlaying)
+        {
+            isTalking = false;
+        }
 
 #if UNITY_EDITOR
         //Cheatcodes, solo funcionan en el editor
@@ -101,14 +109,16 @@ public class Hamster : MonoBehaviour
         if (LevelManager.Instance.AnxietyTimer > 0)
         {
             LevelManager.Instance.AnxietyTimer -= damage;
-            if(AS.isPlaying && (AS.clip.name == "Hit_and_voice_1" || AS.clip.name == "Hit_and_voice_2" || AS.clip.name == "Hit_and_voice_3"))
+            if(as_hamster.isPlaying && isTalking)
             {
-                int randomNum = Random.Range(1,2);
+                //Si se está reproduciendo un sonido con su voz
+                int randomNum = Random.Range(1,3);
                 AudioManager.instance.Play("Hit_"+randomNum);
             }
             else
             {
-                PlayRandomSound(0, 3);
+                PlayRandomSound(true, 0, 3);
+                isTalking = true;
             }
         }
         else
@@ -161,16 +171,38 @@ public class Hamster : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        int randomNum = Random.Range();
+        AudioManager.instance.Play("Hit_Floor_Caida_" + randomNum);
+
+        PlayRandomSound(false, 1, 3);
+    }
+
     void PlaySound()
     {
         
     }
 
-    void PlayRandomSound(int firstAudio, int lastAudio)
+    /// <summary>
+    /// rdsrtsdfgttsdgt
+    /// </summary>
+    /// <param name="hamster">Si modifca el Hamster (true) o la pelota</param>
+    /// <param name="firstAudio"></param>
+    /// <param name="lastAudio"></param>
+    void PlayRandomSound(bool hamster, int firstAudio, int lastAudio)
     {
-        int soundNum = UnityEngine.Random.Range(11, 14);
-        AS.clip = sounds[soundNum];
-        AS.Play();
+        int soundNum = UnityEngine.Random.Range(firstAudio, lastAudio);
+        if (hamster)
+        {
+            as_hamster.clip = sounds[soundNum];
+            as_hamster.Play();
+        }
+        else
+        {
+            as_ball.clip = sounds[soundNum];
+            as_ball.Play();
+        }
     }
 
     void OnGameOver()

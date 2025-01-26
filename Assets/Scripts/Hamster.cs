@@ -10,6 +10,8 @@ public class Hamster : MonoBehaviour
     [SerializeField] float _fallDamage = 5f;
     [SerializeField] float _falYThreshold = -5f;
     [SerializeField] float _rotSpeed;
+    [SerializeField] float _minSlopeAngleToBoostSpeed = 15f;
+    [SerializeField] float _slopeForce;
     [Header("References")]
     [SerializeField] Rigidbody _rb;
     [SerializeField] GameObject _hamsterMesh;
@@ -18,6 +20,7 @@ public class Hamster : MonoBehaviour
     Vector3 _checkpoint;
     Vector3 _lastValidDir;
     GameObject _camera;
+    RaycastHit slopeHit;
 
     float _xAxis, _zAxis;
 
@@ -67,6 +70,13 @@ public class Hamster : MonoBehaviour
         //rotación
         if (adjustedAngle != Vector3.zero) _lastValidDir = adjustedAngle;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_lastValidDir), Time.fixedDeltaTime * _rotSpeed);
+
+        //momentum pendientes, pa aregar momentum al player
+
+        if (OnSlope())
+        {
+            _rb.velocity += Vector3.down * _slopeForce * Time.fixedDeltaTime;
+        }
     }
 
     void PlayerFellOutOfMap()
@@ -99,6 +109,17 @@ public class Hamster : MonoBehaviour
     public void SetCheckpoint(Vector3 position)
     {
         _checkpoint = position;
+    }
+
+    bool OnSlope()
+    {
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, 1f))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            //Debug.Log($"Estoy inclinado un angulo de: {angle}");
+            return angle >= _minSlopeAngleToBoostSpeed && angle != 0;
+        }
+        return false;
     }
 
     void StateAnimationCheck(AnxietyLevel state)

@@ -9,7 +9,7 @@ public class Bubble : MonoBehaviour
     [SerializeField] Mesh ExplodedBubble;
     [SerializeField] Material[] ExplodedBubbleMaterials;
 
-    void Awake()
+    void Start()
     {
         LevelManager.Instance.totalBubbles++;
     }

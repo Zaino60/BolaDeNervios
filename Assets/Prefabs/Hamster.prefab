@@ -87,6 +87,8 @@ MonoBehaviour:
   _fallDamage: 5
   _falYThreshold: -30
   _rotSpeed: 10
+  _minSlopeAngleToBoostSpeed: 10
+  _slopeForce: 25
   _rb: {fileID: 4344785671453274485}
   _hamsterMesh: {fileID: 1454447948624605393}
   _anim: {fileID: 5297571044467224593}
@@ -99,7 +101,7 @@ Rigidbody:
   m_GameObject: {fileID: 231432067075081568}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 1.25
+  m_Drag: 1.5
   m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}

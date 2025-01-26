@@ -58,7 +58,7 @@ public class AudioManager : MonoBehaviour
         AudioClip s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
         {
-            Debug.Log(s.name + " no existe");
+            Debug.LogError(s.name + " no existe");
             return;
         }
         if (pitch == 0) try { _effectsSource.PlayOneShot(s, volume); } catch { }
@@ -99,10 +99,10 @@ public class AudioManager : MonoBehaviour
         if (!clip) _musicSource.Stop();
     }
 
-    public void ButtonPressedSound()
-    {
-        instance.Play("Buttonpress2");
-    }
+    //public void ButtonPressedSound()
+    //{
+    //    instance.Play("Buttonpress2");
+    //}
 
     public AudioClip GetCurrentMusicClip()
     {

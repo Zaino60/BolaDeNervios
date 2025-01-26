@@ -32,6 +32,10 @@ public class LevelManager : MonoBehaviour
     public Action<AnxietyLevel> OnStateChange = delegate { };
     public Action OnGameOver = delegate { };
 
+    //Background Music
+    float zenPitch = 1.1f, chillPitch = 1, alertedPitch = 0.8f, traumatizedPitch = 0.6f;
+    AudioSource musicAS;
+
 
     void Awake()
     {
@@ -45,6 +49,7 @@ public class LevelManager : MonoBehaviour
         stateMultiplier = stateMultiplierNormal;
         bubblesLeft = totalBubbles;
         hamsterStateAnim = hamsterStateFace.gameObject.GetComponent<Animator>();
+        musicAS = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -58,24 +63,32 @@ public class LevelManager : MonoBehaviour
                 if(HamsterAnxietyState != AnxietyLevel.Zen)
                 {
                     ChangeState(AnxietyLevel.Zen);
+                    AudioManager.instance.Play("Feliz_2");
+                    musicAS.pitch = zenPitch;
                 }
             break;
             case float i when i > LvlTimer*chillTier && i <= LvlTimer*zenTier:
                 if (HamsterAnxietyState != AnxietyLevel.Chill)
                 {
                     ChangeState(AnxietyLevel.Chill);
+                    AudioManager.instance.Play("Feliz_1");
+                    musicAS.pitch = chillPitch;
                 }
                 break;
             case float i when i > LvlTimer*alertedTier && i <= LvlTimer* chillTier:
                 if (HamsterAnxietyState != AnxietyLevel.Alerted)
                 {
                     ChangeState(AnxietyLevel.Alerted);
+                    AudioManager.instance.Play("Traumado_2");
+                    musicAS.pitch = alertedPitch;
                 }
                 break;
             case float i when i > 0 && i <= LvlTimer*alertedTier:
                 if (HamsterAnxietyState != AnxietyLevel.Traumatized)
                 {
                     ChangeState(AnxietyLevel.Traumatized);
+                    AudioManager.instance.Play("Traumado_1");
+                    musicAS.pitch = traumatizedPitch;
                 }
                 break;
             case float i when i <= 0 && HamsterAnxietyState != AnxietyLevel.Dead:

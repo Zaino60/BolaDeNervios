@@ -175,12 +175,8 @@ public class Hamster : MonoBehaviour
     {
         if (!as_ball.isPlaying)
         {
-            int randomNum = Random.Range(1, 3);
-            //as_ball.clip = "Hit_Floor_Caida_" + randomNum;
-            //as_ball.Play();
+            PlayRandomSoundByName(false, "Hit_Floor_Caida_", 1, 3);
         }
-
-        PlayRandomSound(false, 1, 3);
     }
 
     void PlaySound()
@@ -207,6 +203,20 @@ public class Hamster : MonoBehaviour
             as_ball.clip = sounds[soundNum];
             as_ball.Play();
         }
+    }
+
+    void PlayRandomSoundByName(bool hamster, string str, int firstIndex, int lastIndex)
+    {
+        int randomNum = Random.Range(firstIndex, lastIndex);
+        foreach(AudioClip clip in sounds)
+        {
+            if(clip.name == str + randomNum)
+            {
+                as_ball.clip = clip;
+            }
+        }
+        
+        as_ball.Play();
     }
 
     void OnGameOver()

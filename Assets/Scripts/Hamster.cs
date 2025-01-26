@@ -22,6 +22,7 @@ public class Hamster : MonoBehaviour
     GameObject _camera;
     RaycastHit slopeHit;
 
+    bool _dead;
     float _xAxis, _zAxis;
 
 
@@ -31,10 +32,12 @@ public class Hamster : MonoBehaviour
     }
     void Start()
     {
-        AudioManager.instance.Play("BubblePop");
-        TakeDamage(1f);
         _checkpoint = transform.position;
-        if (LevelManager.Instance) LevelManager.Instance.OnStateChange += StateAnimationCheck;
+        if (LevelManager.Instance)
+        {
+            LevelManager.Instance.OnStateChange += StateAnimationCheck;
+            LevelManager.Instance.OnGameOver += OnGameOver;
+        }
     }
 
     private void Update()
@@ -55,7 +58,7 @@ public class Hamster : MonoBehaviour
     void FixedUpdate()
     {
         _anim.SetBool("Running", (_zAxis != 0 || _xAxis != 0));
-        Movement();
+        if(!_dead) Movement();
     }
 
     void Movement()
@@ -142,5 +145,12 @@ public class Hamster : MonoBehaviour
                 _anim.SetBool("Injured", true);
                 break;
         }
+    }
+
+    void OnGameOver()
+    {
+        Debug.Log("ongameover");
+        _dead = true;
+        _anim.SetTrigger("Dead");
     }
 }

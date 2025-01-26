@@ -10,8 +10,8 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     float _originalMusicVolume;
     [Header("UI")]
-    [Range(.0001f, 1f)][SerializeField] float _initMusicVol = 1f; //volumen inicial de musica
-    [Range(.0001f, 1f)][SerializeField] float _initSFXVol = 1f; //volumen inicial de sonidos
+    //[Range(.0001f, 1f)][SerializeField] float _initMusicVol = 1f; //volumen inicial de musica
+    //[Range(.0001f, 1f)][SerializeField] float _initSFXVol = 1f; //volumen inicial de sonidos
     [Header("Audio")]
     [SerializeField] AudioSource _musicSource, _effectsSource;
     //[SerializeField] AudioMixer _musicMixer, _sfxMixer;

@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour
     Animator hamsterStateAnim;
 
     public Action<AnxietyLevel> OnStateChange = delegate { };
+    public Action OnGameOver = delegate { };
 
 
     void Awake()
@@ -118,6 +119,7 @@ public class LevelManager : MonoBehaviour
     public void GameOver()
     {
         print("Game Over!");
+        OnGameOver();
         ChangeState(AnxietyLevel.Dead);
         hamsterStateAnim.speed = 0;
     }
@@ -142,4 +144,6 @@ public class LevelManager : MonoBehaviour
             ChangeStateFace(actualFace);
         }
     }
+
+    public Transform HamsterFace => hamsterStateFace.transform;
 }

@@ -6,6 +6,13 @@ public class Booster : MonoBehaviour
 {
     [Header("Values")]
     [SerializeField] float _boostForce;
+    Renderer _mat;
+    float _offsetTime;
+
+    private void Start()
+    {
+        _mat = GetComponentInChildren<Renderer>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,6 +20,19 @@ public class Booster : MonoBehaviour
         {
             Debug.Log("boost");
             other.GetComponent<Rigidbody>().AddForce(transform.forward * _boostForce);
+            //StartCoroutine(BoostEffect());
         }
     }
+
+    //IEnumerator BoostEffect()
+    //{
+    //    _offsetTime = 0;
+    //    for (int i = 0; i < 90; i++)
+    //    {
+    //        _offsetTime += Time.deltaTime * 10f;
+    //        yield return null;
+    //        _mat.material.SetTextureOffset("_BaseMap", new Vector2(0f, _offsetTime));
+    //    }
+    //    _mat.material.SetTextureOffset("_BaseMap", new Vector2(0f, 0f));
+    //}
 }

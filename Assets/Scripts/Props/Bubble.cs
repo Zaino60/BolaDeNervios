@@ -1,3 +1,4 @@
+using AssetKits.ParticleImage;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class Bubble : MonoBehaviour
 
     [SerializeField] Mesh ExplodedBubble;
     [SerializeField] Material[] ExplodedBubbleMaterials;
+
+    [SerializeField] GameObject _popParticlePrefab;
 
     void Start()
     {
@@ -28,6 +31,8 @@ public class Bubble : MonoBehaviour
             LevelManager.Instance.bubblesLeft--;
 
             LevelManager.Instance.ActivatePleasure();
+            ParticleImage particle = Instantiate(_popParticlePrefab, Camera.main.WorldToScreenPoint(transform.position), Quaternion.identity, LevelManager.Instance.HamsterFace).GetComponent<ParticleImage>();
+            particle.attractorTarget = LevelManager.Instance.HamsterFace;
 
             Destroy(this);
         }

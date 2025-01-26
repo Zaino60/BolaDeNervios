@@ -173,8 +173,12 @@ public class Hamster : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        int randomNum = Random.Range();
-        AudioManager.instance.Play("Hit_Floor_Caida_" + randomNum);
+        if (!as_ball.isPlaying)
+        {
+            int randomNum = Random.Range(1, 3);
+            //as_ball.clip = "Hit_Floor_Caida_" + randomNum;
+            //as_ball.Play();
+        }
 
         PlayRandomSound(false, 1, 3);
     }

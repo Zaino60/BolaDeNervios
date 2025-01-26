@@ -20,6 +20,7 @@ public class Booster : MonoBehaviour
         {
             Debug.Log("boost");
             other.GetComponent<Rigidbody>().AddForce(transform.forward * _boostForce);
+            AudioManager.instance.Play("Whoosh_Speed_3",1f,Random.Range(1, 1.1f));
             //StartCoroutine(BoostEffect());
         }
     }

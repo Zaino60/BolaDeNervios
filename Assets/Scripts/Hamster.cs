@@ -17,6 +17,7 @@ public class Hamster : MonoBehaviour
     [SerializeField] Animator _anim;
     [SerializeField] GameObject _brokenBallPrefab;
     [SerializeField] GameObject _deadExplosionParticlePrefab;
+    [SerializeField] ParticleSystem _smokeParticles;
 
     Vector3 _checkpoint;
     Vector3 _lastValidDir;
@@ -52,6 +53,11 @@ public class Hamster : MonoBehaviour
 
     private void Update()
     {
+        if (_rb.velocity.magnitude > 18f && !_smokeParticles.isPlaying)
+        {
+            PlaySmokeParticles();
+            AudioManager.instance.Play("Whoosh_Speed_1");
+        }
         _xAxis = Input.GetAxis("Horizontal");
         _zAxis = Input.GetAxis("Vertical");
         if (transform.position.y <= _falYThreshold) PlayerFellOutOfMap();
@@ -185,6 +191,11 @@ public class Hamster : MonoBehaviour
     void PlaySound()
     {
         
+    }
+
+    public void PlaySmokeParticles()
+    {
+        _smokeParticles.Play();
     }
 
     /// <summary>

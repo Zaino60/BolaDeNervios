@@ -95,6 +95,8 @@ MonoBehaviour:
   _anim: {fileID: 5297571044467224593}
   _brokenBallPrefab: {fileID: 1615517260630346058, guid: 5fba2f57b6271244da9e4359e3365ac2,
     type: 3}
+  _deadExplosionParticlePrefab: {fileID: 417761080263594737, guid: 7800b8f6b712bfe49bd663eeb3ebe1e4,
+    type: 3}
   sounds:
   - {fileID: 8300000, guid: 0c604d349cb807c4ea74a0f3de527a82, type: 3}
   - {fileID: 8300000, guid: 3d33d0f6c6cce0047addbfed7fdef018, type: 3}

@@ -23,6 +23,7 @@ public class Hamster : MonoBehaviour
     Vector3 _lastValidDir;
     GameObject _camera;
     RaycastHit slopeHit;
+    Animator _ballAnim;
 
     bool _dead;
     float _xAxis, _zAxis;
@@ -49,10 +50,14 @@ public class Hamster : MonoBehaviour
 
         as_ball = GetComponent<AudioSource>();
         as_hamster = transform.GetChild(0).GetComponent<AudioSource>();
+        _ballAnim = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        if (_rb.velocity.y > 12) _ballAnim.SetTrigger("Jump");
+        if (_rb.velocity.y < -5) _ballAnim.SetTrigger("Falling");
+
         if (_rb.velocity.magnitude > 18f && !_smokeParticles.isPlaying)
         {
             PlaySmokeParticles();
@@ -191,6 +196,8 @@ public class Hamster : MonoBehaviour
         if (!as_ball.isPlaying)
         {
             PlayRandomSoundByName(false, "Hit_Floor_Caida_", 1, 3);
+            if(_rb.velocity.magnitude > 5) _ballAnim.SetTrigger("Crash");
+            //Debug.Log($"Crashié con magnitud {_rb.velocity.magnitude}");
         }
     }
 

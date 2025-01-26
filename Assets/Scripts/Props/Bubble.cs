@@ -11,6 +11,7 @@ public class Bubble : MonoBehaviour
     [SerializeField] Material[] ExplodedBubbleMaterials;
 
     [SerializeField] GameObject _popParticlePrefab;
+    [SerializeField] GameObject _popParticleInWorldPrefab;
 
     void Start()
     {
@@ -32,6 +33,7 @@ public class Bubble : MonoBehaviour
             LevelManager.Instance.ActivatePleasure();
             ParticleImage particle = Instantiate(_popParticlePrefab, Camera.main.WorldToScreenPoint(transform.position), Quaternion.identity, LevelManager.Instance.HamsterFace).GetComponent<ParticleImage>();
             particle.attractorTarget = LevelManager.Instance.HamsterFace;
+            Instantiate(_popParticleInWorldPrefab, transform.position, Quaternion.identity);
 
             Destroy(this);
         }

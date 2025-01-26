@@ -125,6 +125,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1b3b32110d87c1a439c284c62819bee3, type: 2}
   _popParticlePrefab: {fileID: 6387560334833388928, guid: 0e2e295ac168cc64caacfc3f7e38d9ff,
     type: 3}
+  _popParticleInWorldPrefab: {fileID: 2944396702758532163, guid: 66bef6b534dd13b459b89a77839451c3,
+    type: 3}
 --- !u!1 &982719832944931265
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,6 +251,8 @@ MonoBehaviour:
   ExplodedBubbleMaterials:
   - {fileID: 2100000, guid: 1b3b32110d87c1a439c284c62819bee3, type: 2}
   _popParticlePrefab: {fileID: 6387560334833388928, guid: 0e2e295ac168cc64caacfc3f7e38d9ff,
+    type: 3}
+  _popParticleInWorldPrefab: {fileID: 2944396702758532163, guid: 66bef6b534dd13b459b89a77839451c3,
     type: 3}
 --- !u!1 &4724188039656782528
 GameObject:
@@ -375,6 +379,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1b3b32110d87c1a439c284c62819bee3, type: 2}
   _popParticlePrefab: {fileID: 6387560334833388928, guid: 0e2e295ac168cc64caacfc3f7e38d9ff,
     type: 3}
+  _popParticleInWorldPrefab: {fileID: 2944396702758532163, guid: 66bef6b534dd13b459b89a77839451c3,
+    type: 3}
 --- !u!1 &5370214416935312397
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,6 +505,8 @@ MonoBehaviour:
   ExplodedBubbleMaterials:
   - {fileID: 2100000, guid: 1b3b32110d87c1a439c284c62819bee3, type: 2}
   _popParticlePrefab: {fileID: 6387560334833388928, guid: 0e2e295ac168cc64caacfc3f7e38d9ff,
+    type: 3}
+  _popParticleInWorldPrefab: {fileID: 2944396702758532163, guid: 66bef6b534dd13b459b89a77839451c3,
     type: 3}
 --- !u!1 &5686510152646011052
 GameObject:
@@ -708,6 +716,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1b3b32110d87c1a439c284c62819bee3, type: 2}
   _popParticlePrefab: {fileID: 6387560334833388928, guid: 0e2e295ac168cc64caacfc3f7e38d9ff,
     type: 3}
+  _popParticleInWorldPrefab: {fileID: 2944396702758532163, guid: 66bef6b534dd13b459b89a77839451c3,
+    type: 3}
 --- !u!1 &7213493776379774823
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,6 +843,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1b3b32110d87c1a439c284c62819bee3, type: 2}
   _popParticlePrefab: {fileID: 6387560334833388928, guid: 0e2e295ac168cc64caacfc3f7e38d9ff,
     type: 3}
+  _popParticleInWorldPrefab: {fileID: 2944396702758532163, guid: 66bef6b534dd13b459b89a77839451c3,
+    type: 3}
 --- !u!1 &7373578089132639841
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,6 +969,8 @@ MonoBehaviour:
   ExplodedBubbleMaterials:
   - {fileID: 2100000, guid: 1b3b32110d87c1a439c284c62819bee3, type: 2}
   _popParticlePrefab: {fileID: 6387560334833388928, guid: 0e2e295ac168cc64caacfc3f7e38d9ff,
+    type: 3}
+  _popParticleInWorldPrefab: {fileID: 2944396702758532163, guid: 66bef6b534dd13b459b89a77839451c3,
     type: 3}
 --- !u!1 &7450998877074958350
 GameObject:
@@ -1127,6 +1141,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1b3b32110d87c1a439c284c62819bee3, type: 2}
   _popParticlePrefab: {fileID: 6387560334833388928, guid: 0e2e295ac168cc64caacfc3f7e38d9ff,
     type: 3}
+  _popParticleInWorldPrefab: {fileID: 2944396702758532163, guid: 66bef6b534dd13b459b89a77839451c3,
+    type: 3}
 --- !u!1 &7885496045275672276
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,6 +1267,8 @@ MonoBehaviour:
   ExplodedBubbleMaterials:
   - {fileID: 2100000, guid: 1b3b32110d87c1a439c284c62819bee3, type: 2}
   _popParticlePrefab: {fileID: 6387560334833388928, guid: 0e2e295ac168cc64caacfc3f7e38d9ff,
+    type: 3}
+  _popParticleInWorldPrefab: {fileID: 2944396702758532163, guid: 66bef6b534dd13b459b89a77839451c3,
     type: 3}
 --- !u!1 &8212118283619187522
 GameObject:
@@ -1377,6 +1395,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1b3b32110d87c1a439c284c62819bee3, type: 2}
   _popParticlePrefab: {fileID: 6387560334833388928, guid: 0e2e295ac168cc64caacfc3f7e38d9ff,
     type: 3}
+  _popParticleInWorldPrefab: {fileID: 2944396702758532163, guid: 66bef6b534dd13b459b89a77839451c3,
+    type: 3}
 --- !u!1 &8521883542591210555
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,6 +1522,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1b3b32110d87c1a439c284c62819bee3, type: 2}
   _popParticlePrefab: {fileID: 6387560334833388928, guid: 0e2e295ac168cc64caacfc3f7e38d9ff,
     type: 3}
+  _popParticleInWorldPrefab: {fileID: 2944396702758532163, guid: 66bef6b534dd13b459b89a77839451c3,
+    type: 3}
 --- !u!1 &8984378679929747443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1626,4 +1648,6 @@ MonoBehaviour:
   ExplodedBubbleMaterials:
   - {fileID: 2100000, guid: 1b3b32110d87c1a439c284c62819bee3, type: 2}
   _popParticlePrefab: {fileID: 6387560334833388928, guid: 0e2e295ac168cc64caacfc3f7e38d9ff,
+    type: 3}
+  _popParticleInWorldPrefab: {fileID: 2944396702758532163, guid: 66bef6b534dd13b459b89a77839451c3,
     type: 3}

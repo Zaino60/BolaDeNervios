@@ -10,7 +10,8 @@ public class CameraController : MonoBehaviour
     [Header("Values")]
     [SerializeField] float _zOffset;
 
-    Vector3 _offset;
+    //Vector3 _offset;
+    Quaternion _spawnRotation;
 
     public float distance = 10.0f;
     private float currentX = 50.0f;
@@ -19,7 +20,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        _offset = transform.position + Vector3.forward * _zOffset;
+        //_offset = transform.position + Vector3.forward * _zOffset;
         if (!_target) _target = FindObjectOfType<Hamster>().transform;
     }
 
@@ -41,4 +42,6 @@ public class CameraController : MonoBehaviour
 
 
     }
+
+    public float GetSpawnRotationOffset() => _spawnRotation.eulerAngles.y;
 }

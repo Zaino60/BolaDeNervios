@@ -17,9 +17,15 @@ public class Hamster : MonoBehaviour
 
     Vector3 _checkpoint;
     Vector3 _lastValidDir;
+    GameObject _camera;
 
     float _xAxis, _zAxis;
 
+
+    private void Awake()
+    {
+        _camera = Camera.main.gameObject;
+    }
     void Start()
     {
         AudioManager.instance.Play("BubblePop");
@@ -32,6 +38,7 @@ public class Hamster : MonoBehaviour
     {
         _xAxis = Input.GetAxis("Horizontal");
         _zAxis = Input.GetAxis("Vertical");
+        if (transform.position.y <= _falYThreshold) PlayerFellOutOfMap();
 
 #if UNITY_EDITOR
         //Cheatcodes, solo funcionan en el editor
@@ -45,28 +52,21 @@ public class Hamster : MonoBehaviour
     void FixedUpdate()
     {
         _anim.SetBool("Running", (_zAxis != 0 || _xAxis != 0));
-        Debug.Log($"Running: {(_zAxis != 0 || _xAxis != 0)}");
-        Debug.Log($"Injured: {_anim.GetBool("Injured")}");
         Movement();
-        MeshRotation();
-    }
-
-    void MeshRotation()
-    {
-        //Vector3 Dir = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")).normalized; //Creo vector dirección determinado por los WASD que estoy apretando
-        Vector3 Dir = new Vector3(-_zAxis, 0f, _xAxis).normalized; //Creo vector dirección determinado por los WASD que estoy apretando
-
-        if (Dir != Vector3.zero) _lastValidDir = Dir;
-        //if (Dir != Vector3.zero) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Dir), Time.fixedDeltaTime * _rotSpeed); //anterior
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_lastValidDir), Time.fixedDeltaTime * _rotSpeed);
     }
 
     void Movement()
     {
-        Vector3 dir = new Vector3(-_zAxis, 0f, _xAxis).normalized;
-        _rb.AddForce(dir * _speed);
+        //movimiento
+        Vector3 dir = new Vector3(_xAxis, 0f, _zAxis).normalized;
+        //Ajusto la corrección (rotacion del vector) en base a mi camara que puede estar rotada
+        float offset = _camera.GetComponent<CameraController>().GetSpawnRotationOffset();
+        Vector3 adjustedAngle = Quaternion.AngleAxis(_camera.transform.rotation.eulerAngles.y - offset, Vector3.up) * dir; 
+        _rb.AddForce(adjustedAngle * _speed);
 
-        if (transform.position.y <= _falYThreshold) PlayerFellOutOfMap();
+        //rotación
+        if (adjustedAngle != Vector3.zero) _lastValidDir = adjustedAngle;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_lastValidDir), Time.fixedDeltaTime * _rotSpeed);
     }
 
     void PlayerFellOutOfMap()

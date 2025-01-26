@@ -85,7 +85,7 @@ MonoBehaviour:
   _fitRect: 0
   _emitOnSurface: 1
   _emitterThickness: 0
-  _loop: 1
+  _loop: 0
   _prewarm: 0
   _duration: 1
   _playMode: 1
@@ -1536,7 +1536,7 @@ MonoBehaviour:
   _fitRect: 0
   _emitOnSurface: 1
   _emitterThickness: 0
-  _loop: 1
+  _loop: 0
   _prewarm: 0
   _duration: 1
   _playMode: 1

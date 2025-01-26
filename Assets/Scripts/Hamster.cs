@@ -222,6 +222,25 @@ public class Hamster : MonoBehaviour
         as_ball.Play();
     }
 
+    public void WinSequence()
+    {
+        LevelManager.Instance.PauseGame();
+        Debug.Log("ongameover");
+        _rb.velocity = Vector3.zero;
+        _dead = true;
+        _anim.SetTrigger("Victory");
+        Camera.main.GetComponent<CameraController>().CloseLookup = true;
+        StartCoroutine(GameWonSequence());
+        AudioManager.instance.Play("Feliz_2");
+        LevelManager.Instance.WinConfetti();
+    }
+
+    IEnumerator GameWonSequence()
+    {
+        yield return new WaitForSeconds(4.5f);
+        LevelManager.Instance.WinScreenAppear();
+    }
+
     void OnGameOver()
     {
         Debug.Log("ongameover");
@@ -238,7 +257,7 @@ public class Hamster : MonoBehaviour
 
     IEnumerator GameOverSequence()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         LevelManager.Instance.DeadScreenAppear();
     }
 }

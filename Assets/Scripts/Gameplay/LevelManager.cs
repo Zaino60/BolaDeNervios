@@ -27,6 +27,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Image anxietyFill;
     [SerializeField] GameObject _deadScreen;
     [SerializeField] GameObject _winScreen;
+    [SerializeField] GameObject _winConfettiPrefab;
+    [SerializeField] GameObject _winConfettiSpawnPoint;
     float stateMultiplier, stateMultiplierNormal = 1, stateMultiplierSlow = .75f;
     float extraTimerBeforeKill = 2;
     public float currentExtraTimerBeforeKill { get; set; }
@@ -34,10 +36,12 @@ public class LevelManager : MonoBehaviour
 
     public Action<AnxietyLevel> OnStateChange = delegate { };
     public Action OnGameOver = delegate { };
+    public Action OnGameWon = delegate { };
 
     //Background Music
     float zenPitch = 1.1f, chillPitch = 1, alertedPitch = 0.8f, traumatizedPitch = 0.6f;
     AudioSource musicAS;
+    bool _paused;
 
 
     void Awake()
@@ -59,7 +63,7 @@ public class LevelManager : MonoBehaviour
     {
         UIFillBar();
 
-        AnxietyTimer -= Time.deltaTime * stateMultiplier;
+        if(!_paused) AnxietyTimer -= Time.deltaTime * stateMultiplier;
 
         switch (AnxietyTimer){
             case float i when i > LvlTimer*.8f && i <= LvlTimer:
@@ -140,6 +144,11 @@ public class LevelManager : MonoBehaviour
         hamsterStateAnim.speed = 0;
     }
 
+    public void PauseGame()
+    {
+        _paused = true;
+    }
+
     public void ChangeStateFace(int face)
     {
         hamsterStateFace.sprite = sprStates[face];
@@ -164,6 +173,11 @@ public class LevelManager : MonoBehaviour
     public void WinScreenAppear()
     {
         _winScreen.SetActive(true);
+    }
+
+    public void WinConfetti()
+    {
+        Instantiate(_winConfettiPrefab, _winConfettiSpawnPoint.transform.position, Quaternion.identity, _winConfettiSpawnPoint.transform);
     }
 
     public void BackToMainMenu()

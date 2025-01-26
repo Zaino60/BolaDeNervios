@@ -23,6 +23,7 @@ public class Spring : MonoBehaviour
         if (other.GetComponent<Hamster>())
         {
             Debug.Log("boing");
+            other.GetComponent<Rigidbody>().velocity = Vector3.zero;
             other.GetComponent<Rigidbody>().AddForce(transform.up * _jumpForce);
 
             int randomNum = Random.Range(0, sounds.Length);

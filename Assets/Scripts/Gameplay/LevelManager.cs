@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Image hamsterStateFace;
     [SerializeField] Sprite[] sprStates;
     [SerializeField] Image anxietyFill;
+    [SerializeField] GameObject _deadScreen;
+    [SerializeField] GameObject _winScreen;
     float stateMultiplier, stateMultiplierNormal = 1, stateMultiplierSlow = .75f;
     float extraTimerBeforeKill = 2;
     public float currentExtraTimerBeforeKill { get; set; }
@@ -156,6 +159,26 @@ public class LevelManager : MonoBehaviour
             yield return new WaitForSeconds(1);
             ChangeStateFace(actualFace);
         }
+    }
+
+    public void WinScreenAppear()
+    {
+        _winScreen.SetActive(true);
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void DeadScreenAppear()
+    {
+        _deadScreen.SetActive(true);
     }
 
     public Transform HamsterFace => hamsterStateFace.transform;

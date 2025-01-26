@@ -16,6 +16,7 @@ public class Hamster : MonoBehaviour
     [SerializeField] GameObject _hamsterMesh;
     [SerializeField] Animator _anim;
     [SerializeField] GameObject _brokenBallPrefab;
+    [SerializeField] GameObject _deadExplosionParticlePrefab;
 
     Vector3 _checkpoint;
     Vector3 _lastValidDir;
@@ -227,7 +228,17 @@ public class Hamster : MonoBehaviour
         _rb.velocity = Vector3.zero;
         GetComponent<Renderer>().enabled = false;
         Instantiate(_brokenBallPrefab, transform.position, Quaternion.identity);
+        Instantiate(_deadExplosionParticlePrefab, transform.position, Quaternion.identity);
         _dead = true;
         _anim.SetTrigger("Dead");
+        Camera.main.GetComponent<CameraController>().CloseLookup = true;
+        StartCoroutine(GameOverSequence());
+        AudioManager.instance.Play("Muerto_" + Random.Range(1,3));
+    }
+
+    IEnumerator GameOverSequence()
+    {
+        yield return new WaitForSeconds(2f);
+        LevelManager.Instance.DeadScreenAppear();
     }
 }

@@ -23,10 +23,9 @@ public class Bubble : MonoBehaviour
         {
             GetComponent<MeshFilter>().mesh = ExplodedBubble;
             GetComponent<MeshRenderer>().materials = ExplodedBubbleMaterials;
-            
-            int soundNum = Random.Range(0, 6);
-            AudioManager.instance.Play(soundNum);
-            
+
+            AudioManager.instance.PlayRandomSound(0, 6);
+
             coll.GetComponent<Hamster>().Heal(healNum);
             LevelManager.Instance.bubblesLeft--;
 

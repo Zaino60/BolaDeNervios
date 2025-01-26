@@ -46,8 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe9706930ca8b047944ee138008ff2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initMusicVol: 1
-  _initSFXVol: 1
   _musicSource: {fileID: 9040566682697219937}
   _effectsSource: {fileID: 1734208473747310037}
   _soundPrefab: {fileID: 6369915024394732600, guid: ab0eb4b63c8dd76459e6353891a3c796,
@@ -59,6 +57,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c5b3d2d9e83559e429dfecad9902865a, type: 3}
   - {fileID: 8300000, guid: c3ab36cc9d10a8c45b0c862a759d369f, type: 3}
   - {fileID: 8300000, guid: 63972dbedb2f3bd40930cf60c545ee83, type: 3}
+  - {fileID: 8300000, guid: 4509377d58186714abd6c5088b4375c6, type: 3}
+  - {fileID: 8300000, guid: 5abac1c24ab3d814681b803e9645001b, type: 3}
+  - {fileID: 8300000, guid: c9addc6e360d8bc488c2d9611b5cf7f7, type: 3}
+  - {fileID: 8300000, guid: 7b9f45bad2fbef34bb63242dfb07ed67, type: 3}
+  - {fileID: 8300000, guid: 3e3326ddb197c424c8091899eb6e05a1, type: 3}
 --- !u!1 &6317903384961318748
 GameObject:
   m_ObjectHideFlags: 0

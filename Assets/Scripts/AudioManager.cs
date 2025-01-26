@@ -119,5 +119,10 @@ public class AudioManager : MonoBehaviour
         _musicSource.Play();
     }
 
+    public void PlayRandomSound(int firstAudio, int lastAudio)
+    {
+        int soundNum = UnityEngine.Random.Range(11, 14);
+        AudioManager.instance.Play(soundNum);
+    }
 }
 

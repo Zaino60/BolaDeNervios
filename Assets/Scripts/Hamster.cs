@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +24,10 @@ public class Hamster : MonoBehaviour
     bool _dead;
     float _xAxis, _zAxis;
 
+    //Sound
+    [SerializeField] AudioClip[] sounds;
+    AudioSource AS;
+
 
     private void Awake()
     {
@@ -38,6 +41,8 @@ public class Hamster : MonoBehaviour
             LevelManager.Instance.OnStateChange += StateAnimationCheck;
             LevelManager.Instance.OnGameOver += OnGameOver;
         }
+
+        AS = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -96,10 +101,19 @@ public class Hamster : MonoBehaviour
         if (LevelManager.Instance.AnxietyTimer > 0)
         {
             LevelManager.Instance.AnxietyTimer -= damage;
+            if(AS.isPlaying && (AS.clip.name == "Hit_and_voice_1" || AS.clip.name == "Hit_and_voice_2" || AS.clip.name == "Hit_and_voice_3"))
+            {
+                int randomNum = Random.Range(1,2);
+                AudioManager.instance.Play("Hit_"+randomNum);
+            }
+            else
+            {
+                PlayRandomSound(0, 3);
+            }
         }
         else
         {
-            LevelManager.Instance.currentExtraTimerBeforeKill -= damage;
+            LevelManager.Instance.currentExtraTimerBeforeKill = 0;
         }
     }
 
@@ -145,6 +159,18 @@ public class Hamster : MonoBehaviour
                 _anim.SetBool("Injured", true);
                 break;
         }
+    }
+
+    void PlaySound()
+    {
+        
+    }
+
+    void PlayRandomSound(int firstAudio, int lastAudio)
+    {
+        int soundNum = UnityEngine.Random.Range(11, 14);
+        AS.clip = sounds[soundNum];
+        AS.Play();
     }
 
     void OnGameOver()

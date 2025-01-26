@@ -57,6 +57,7 @@ public class Hamster : MonoBehaviour
         {
             PlaySmokeParticles();
             AudioManager.instance.Play("Whoosh_Speed_1");
+            AudioManager.instance.Play("Weeee_Jump_2");
         }
         _xAxis = Input.GetAxis("Horizontal");
         _zAxis = Input.GetAxis("Vertical");

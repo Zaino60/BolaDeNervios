@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
@@ -175,6 +176,8 @@ public class LevelManager : MonoBehaviour
     {
         Cursor.visible = true;
         _winScreen.SetActive(true);
+
+        _winScreen.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "¡Sobreviste! \n Y explotaste " + bubblesLeft + "/" + totalBubbles + " burbujas.";
     }
 
     public void WinConfetti()

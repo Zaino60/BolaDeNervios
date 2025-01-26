@@ -55,7 +55,7 @@ public class Hamster : MonoBehaviour
 
     private void Update()
     {
-        if (_rb.velocity.y > 12) _ballAnim.SetTrigger("Jump");
+        if (_rb.velocity.y > 8) _ballAnim.SetTrigger("Jump");
         if (_rb.velocity.y < -5) _ballAnim.SetTrigger("Falling");
 
         if (_rb.velocity.magnitude > 18f && !_smokeParticles.isPlaying)

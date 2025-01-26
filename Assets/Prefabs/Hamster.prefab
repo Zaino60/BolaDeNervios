@@ -85,9 +85,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 15
   _fallDamage: 5
-  _falYThreshold: -30
+  _falYThreshold: -50
   _rotSpeed: 10
-  _minSlopeAngleToBoostSpeed: 10
+  _minSlopeAngleToBoostSpeed: 40
   _slopeForce: 25
   _rb: {fileID: 4344785671453274485}
   _hamsterMesh: {fileID: 1454447948624605393}

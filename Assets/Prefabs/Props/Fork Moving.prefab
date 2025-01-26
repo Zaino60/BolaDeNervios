@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 7189894040690272011}
   - component: {fileID: 2254914098125594068}
   - component: {fileID: 4384756072418797295}
+  - component: {fileID: 5863496714704837242}
   m_Layer: 0
-  m_Name: Fork Spike
+  m_Name: Fork Moving
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,9 +28,9 @@ Transform:
   m_GameObject: {fileID: 1183795951766622442}
   serializedVersion: 2
   m_LocalRotation: {x: 1, y: -0, z: -0, w: 0.00000058114523}
-  m_LocalPosition: {x: -1.2154865, y: -0.35, z: 3.29}
+  m_LocalPosition: {x: -1.215487, y: -0.35, z: 3.29}
   m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6022896880790650778}
   m_Father: {fileID: 0}
@@ -67,8 +68,29 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.19425368, y: 0.12079742, z: 0.21069878}
-  m_Center: {x: -0.06458938, y: -0.010398701, z: -8.5420943e-17}
+  m_Size: {x: 0.19057426, y: 0.12079742, z: 0.21069878}
+  m_Center: {x: 0.6684098, y: -0.010398701, z: 1.5622803e-16}
+--- !u!95 &5863496714704837242
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183795951766622442}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 716adeeaa93ded045bae7de85469a0a1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1401724050549805699
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,7 +154,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: f91574414da692a4db0b30accfe7be5e, type: 3}
+  - {fileID: 2100000, guid: e726fd4659c8b3447a7683933c3a8be1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

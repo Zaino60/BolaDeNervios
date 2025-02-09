@@ -18,6 +18,7 @@ public class Hamster : MonoBehaviour
     [SerializeField] GameObject _brokenBallPrefab;
     [SerializeField] GameObject _deadExplosionParticlePrefab;
     [SerializeField] ParticleSystem _smokeParticles;
+    [SerializeField] GameObject WinCam;
 
     Vector3 _checkpoint;
     Vector3 _lastValidDir;
@@ -253,7 +254,8 @@ public class Hamster : MonoBehaviour
         _rb.velocity = Vector3.zero;
         _dead = true;
         _anim.SetTrigger("Victory");
-        Camera.main.GetComponent<CameraController>().CloseLookup = true;
+        //Camera.main.GetComponent<CameraController>().CloseLookup = true;
+        WinCam.SetActive(true);
         StartCoroutine(GameWonSequence());
         AudioManager.instance.Play("Feliz_2");
         LevelManager.Instance.WinConfetti();

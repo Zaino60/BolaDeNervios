@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3878513628229318153}
   - component: {fileID: 8897388111099469449}
   - component: {fileID: 287260610389894778}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1201642447974862327}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PF_CageWallHole_White
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 4290042937561459842}
   - component: {fileID: 5036212257072101318}
   - component: {fileID: 8184258225154625003}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 3399128987293678067}
   - component: {fileID: 5195882011147964791}
   - component: {fileID: 7787841388768955621}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 1701261552477223846}
   - component: {fileID: 2065418056642578058}
   - component: {fileID: 7728273548624010244}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 1745948884206612919}
   - component: {fileID: 3288760195452022964}
   - component: {fileID: 945219047672933067}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (26)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

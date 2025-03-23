@@ -11,6 +11,8 @@ public class Hamster : MonoBehaviour
     [SerializeField] float _rotSpeed;
     [SerializeField] float _minSlopeAngleToBoostSpeed = 15f;
     [SerializeField] float _slopeForce;
+    [SerializeField] float coyoteTime = .1f; //cant de segundos extras para saltar
+    [SerializeField] float jumpBufferTime = .1f; //cant de segundos extras en los que te toma la tecla de salto, antes de caer
     [Header("References")]
     [SerializeField] Rigidbody _rb;
     [SerializeField] GameObject _hamsterMesh;
@@ -28,6 +30,11 @@ public class Hamster : MonoBehaviour
 
     bool _dead;
     float _xAxis, _zAxis;
+
+    bool isGrounded;
+    private bool isCoyoteTime;
+    private float timerCoyote;
+    private float timerJumpBuffer;
 
     //Sound
     [SerializeField] AudioClip[] sounds;
@@ -56,6 +63,9 @@ public class Hamster : MonoBehaviour
 
     private void Update()
     {
+        GroundCheck();
+        BufferCheck();
+
         if (_rb.velocity.y > 8) _ballAnim.SetTrigger("Jump");
         if (_rb.velocity.y < -5) _ballAnim.SetTrigger("Falling");
 
@@ -79,10 +89,22 @@ public class Hamster : MonoBehaviour
             isTalking = false;
         }
 
-//#if UNITY_EDITOR
+        //CoyoteTime
+        if (!isGrounded && isCoyoteTime) 
+        {
+            timerCoyote += Time.deltaTime;
+            if (timerCoyote > coyoteTime) isCoyoteTime = false;
+        }
+        //Salto
+        if (timerJumpBuffer >= 0 && (isGrounded || isCoyoteTime) && !OnSlope()){
+            isCoyoteTime = false;
+            _rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
+            timerJumpBuffer = 0;
+        }
+        //#if UNITY_EDITOR
         //Cheatcodes, solo funcionan en el editor
         if (Input.GetKeyDown(KeyCode.Return)) UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-        if (Input.GetKeyDown(KeyCode.Space)) _rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
+        //if (Input.GetKeyDown(KeyCode.Space)) _rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
         if (Input.GetKeyDown(KeyCode.F)) TakeDamage(100f);
         //Con Enter restarteo la escena, para evitar estar poniendo y sacando play todo el tiempo
 //#endif
@@ -200,6 +222,30 @@ public class Hamster : MonoBehaviour
             if(_rb.velocity.magnitude > 5) _ballAnim.SetTrigger("Crash");
             //Debug.Log($"Crashié con magnitud {_rb.velocity.magnitude}");
         }
+    }
+
+    void GroundCheck()
+    {
+        RaycastHit hit;
+        float distance = 1f;
+        Vector3 dir = new Vector3(0, -1);
+
+        if (Physics.Raycast(transform.position, dir, out hit, distance))
+        {
+            isGrounded = true;
+            isCoyoteTime = true;
+            timerCoyote = 0;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+    }
+
+    void BufferCheck()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) timerJumpBuffer = jumpBufferTime;
+        else timerJumpBuffer -= Time.deltaTime;
     }
 
     void PlaySound()

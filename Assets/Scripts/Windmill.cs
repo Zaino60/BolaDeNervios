@@ -9,6 +9,7 @@ public class Windmill : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.GetComponent<Hamster>()) other.GetComponent<Rigidbody>().AddForce(transform.up * _windForce);
+        //if (other.GetComponent<Hamster>()) other.GetComponent<Rigidbody>().AddForce(transform.up * _windForce);
+        other.GetComponent<Rigidbody>().AddForce(transform.up * _windForce);
     }
 }

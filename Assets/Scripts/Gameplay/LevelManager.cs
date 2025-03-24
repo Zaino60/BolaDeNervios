@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] float zenTier = .7f, chillTier = .4f, alertedTier = .1f;
 
     //Bubbles
-    public int totalBubbles;
+    public int totalBubbles { get; set; }
     public int bubblesLeft { get; set; }
 
     //State
@@ -56,9 +56,16 @@ public class LevelManager : MonoBehaviour
         Cursor.visible = false;
         AnxietyTimer = LvlTimer*zenTier;
         stateMultiplier = stateMultiplierNormal;
-        bubblesLeft = totalBubbles;
         hamsterStateAnim = hamsterStateFace.gameObject.GetComponent<Animator>();
         musicAS = GetComponent<AudioSource>();
+
+        StartCoroutine(DelayedStart());
+    }
+
+    IEnumerator DelayedStart()
+    {
+        yield return new WaitForEndOfFrame();
+        bubblesLeft = totalBubbles;
     }
 
     void Update()
@@ -177,7 +184,7 @@ public class LevelManager : MonoBehaviour
         Cursor.visible = true;
         _winScreen.SetActive(true);
 
-        _winScreen.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "¡Sobreviste! \n Y explotaste " + bubblesLeft + "/" + totalBubbles + " burbujas.";
+        _winScreen.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "¡Sobreviste! \n Y explotaste " + (totalBubbles - bubblesLeft) + "/" + totalBubbles + " burbujas.";
     }
 
     public void WinConfetti()

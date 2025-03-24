@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using Random = UnityEngine.Random;
 
 public class Hamster : MonoBehaviour
 {
     [Header("Values")]
     [SerializeField] float _speed = .25f;
+    [SerializeField] float _jumpForce = 10f;
     [SerializeField] float _fallDamage = 5f;
     [SerializeField] float _falYThreshold = -5f;
     [SerializeField] float _rotSpeed;
     [SerializeField] float _minSlopeAngleToBoostSpeed = 15f;
     [SerializeField] float _slopeForce;
-    [SerializeField] float coyoteTime = .1f; //cant de segundos extras para saltar
-    [SerializeField] float jumpBufferTime = .1f; //cant de segundos extras en los que te toma la tecla de salto, antes de caer
+    [Tooltip("cant de segundos extras para saltar")]
+    [SerializeField] float _maxTimeOutOfGroundToJump = .1f;
+    [Tooltip("distancia extra mas arriba del piso por la cual consideramos que el jugador puede volver a saltar.")]
+    [SerializeField] float _inputBufferingDistance = .5f;
+    [SerializeField] KeyCode _jumpKey = KeyCode.Space;
+    [SerializeField] LayerMask _groundLayer;
     [Header("References")]
     [SerializeField] Rigidbody _rb;
     [SerializeField] GameObject _hamsterMesh;
@@ -21,6 +28,8 @@ public class Hamster : MonoBehaviour
     [SerializeField] GameObject _deadExplosionParticlePrefab;
     [SerializeField] ParticleSystem _smokeParticles;
     [SerializeField] GameObject WinCam;
+    [SerializeField] GameObject _ballMesh;
+    Action OnPlayerTouchedGround = delegate { };
 
     Vector3 _checkpoint;
     Vector3 _lastValidDir;
@@ -34,11 +43,16 @@ public class Hamster : MonoBehaviour
     bool isGrounded;
     private bool isCoyoteTime;
     private float timerCoyote;
-    private float timerJumpBuffer;
+    bool _inputBufferWindow;
+    bool _jumped = false; //si el jugador acaba de saltar. Se pone en falso cuando toca la tierra de vuelta. Usado para el coyote time.
+    bool _jumpWhenFloorIstouched;
 
     //Sound
     [SerializeField] AudioClip[] sounds;
-    AudioSource as_ball, as_hamster;
+    [Tooltip("Sonidos que de las colisiones de la bola del hamster")]
+    [SerializeField] AudioSource as_ball;
+    [Tooltip("Sonidos que se encargan de las voces del hamster. Ej: wohooo al ir super rapido")]
+    [SerializeField] AudioSource as_hamster;
 
     bool isTalking;
 
@@ -55,16 +69,14 @@ public class Hamster : MonoBehaviour
             LevelManager.Instance.OnStateChange += StateAnimationCheck;
             LevelManager.Instance.OnGameOver += OnGameOver;
         }
-
-        as_ball = GetComponent<AudioSource>();
-        as_hamster = transform.GetChild(0).GetComponent<AudioSource>();
         _ballAnim = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        //Debug.Log(isGrounded);
+        //Debug.Log($"Jumped {_jumped}");
         GroundCheck();
-        BufferCheck();
 
         if (_rb.velocity.y > 8) _ballAnim.SetTrigger("Jump");
         if (_rb.velocity.y < -5) _ballAnim.SetTrigger("Falling");
@@ -93,21 +105,40 @@ public class Hamster : MonoBehaviour
         if (!isGrounded && isCoyoteTime) 
         {
             timerCoyote += Time.deltaTime;
-            if (timerCoyote > coyoteTime) isCoyoteTime = false;
+            if (timerCoyote > _maxTimeOutOfGroundToJump)
+            {
+                isCoyoteTime = false;
+                timerCoyote = 0f;
+            }
         }
+
         //Salto
-        if (timerJumpBuffer >= 0 && (isGrounded || isCoyoteTime) && !OnSlope()){
-            isCoyoteTime = false;
-            _rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
-            timerJumpBuffer = 0;
+        if (Input.GetKeyDown(_jumpKey))
+        {
+            if (isGrounded || (isCoyoteTime && !_jumped))
+            {
+                PlayerJumed();
+                return;
+            }
+            if (_inputBufferWindow)
+            {
+                _jumpWhenFloorIstouched = true;
+            }
         }
-        //#if UNITY_EDITOR
+
+        if (_jumpWhenFloorIstouched && isGrounded)
+        {
+            PlayerJumed();
+            _jumpWhenFloorIstouched = false;
+        }
+
+        #if UNITY_EDITOR
         //Cheatcodes, solo funcionan en el editor
         if (Input.GetKeyDown(KeyCode.Return)) UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-        //if (Input.GetKeyDown(KeyCode.Space)) _rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
         if (Input.GetKeyDown(KeyCode.F)) TakeDamage(100f);
-        //Con Enter restarteo la escena, para evitar estar poniendo y sacando play todo el tiempo
-//#endif
+        if (Input.GetKeyDown(KeyCode.G)) LevelManager.Instance.AnxietyTimer += 10000f;
+        if (Input.GetKeyDown(KeyCode.X)) _rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
+        #endif
     }
 
     // Update is called once per frame
@@ -115,6 +146,15 @@ public class Hamster : MonoBehaviour
     {
         _anim.SetBool("Running", (_zAxis != 0 || _xAxis != 0));
         if(!_dead) Movement();
+    }
+
+    void PlayerJumed()
+    {
+        _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
+        Debug.Log($"Acabo de saltar. Grounded {isGrounded}, isCoyoTeTime {isCoyoteTime}, jumped {_jumped}, timer coyote{timerCoyote}");
+        isCoyoteTime = false;
+        _jumped = true;
+        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
     }
 
     void Movement()
@@ -183,7 +223,7 @@ public class Hamster : MonoBehaviour
 
     bool OnSlope()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, 1f))
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, 1f, _groundLayer, QueryTriggerInteraction.Ignore))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             //Debug.Log($"Estoy inclinado un angulo de: {angle}");
@@ -227,27 +267,35 @@ public class Hamster : MonoBehaviour
     void GroundCheck()
     {
         RaycastHit hit;
-        float distance = 1f;
-        Vector3 dir = new Vector3(0, -1);
 
-        if (Physics.Raycast(transform.position, dir, out hit, distance))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, .65f + _inputBufferingDistance, _groundLayer, QueryTriggerInteraction.Ignore))
         {
-            isGrounded = true;
-            isCoyoteTime = true;
-            timerCoyote = 0;
+            if (hit.distance <= .65f) //está tocando el piso, ya que el raycast se castea desde el centro de la esfera.
+            {
+                //Debug.Log(hit.distance);
+                if (!isGrounded)
+                {
+                    _jumped = false;
+                    isGrounded = true;
+                    OnPlayerTouchedGround();
+                    isCoyoteTime = true;
+                    timerCoyote = 0;
+                    _inputBufferWindow = false;
+                }
+            }
+            else
+            {
+                //Tocó el piso pero está mas alejado
+                isGrounded = false;
+                _inputBufferWindow = true;
+            }
         }
         else
         {
+            _inputBufferWindow = false;
             isGrounded = false;
         }
     }
-
-    void BufferCheck()
-    {
-        if (Input.GetKeyDown(KeyCode.Space)) timerJumpBuffer = jumpBufferTime;
-        else timerJumpBuffer -= Time.deltaTime;
-    }
-
     void PlaySound()
     {
         
@@ -266,7 +314,7 @@ public class Hamster : MonoBehaviour
     /// <param name="lastAudio"></param>
     void PlayRandomSound(bool hamster, int firstAudio, int lastAudio)
     {
-        int soundNum = UnityEngine.Random.Range(firstAudio, lastAudio);
+        int soundNum = Random.Range(firstAudio, lastAudio);
         if (hamster)
         {
             as_hamster.clip = sounds[soundNum];
@@ -317,7 +365,7 @@ public class Hamster : MonoBehaviour
     {
         Debug.Log("ongameover");
         _rb.velocity = Vector3.zero;
-        GetComponent<Renderer>().enabled = false;
+        _ballMesh.SetActive(false);
         Instantiate(_brokenBallPrefab, transform.position, Quaternion.identity);
         Instantiate(_deadExplosionParticlePrefab, transform.position, Quaternion.identity);
         _dead = true;

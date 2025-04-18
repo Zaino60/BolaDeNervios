@@ -8,16 +8,23 @@ public class Hamster : MonoBehaviour
 {
     [Header("Values")]
     [SerializeField] float _speed = .25f;
-    [SerializeField] float _jumpForce = 10f;
+    [Tooltip("Fuerza que se aplica con tan solo presionar la tecla")]
+    [SerializeField] float _jumpInitialForce = 8f;
+    [Tooltip("Fuerza que se agrega progresivamente si el jugador mantiene la tecla")]
+    [SerializeField] float _jumpForce = 12f;
+    [Tooltip("Tiempo máximo en el que el jugador puede mantener la tecla del salto, mientras se agrega fuerza")]
+    [SerializeField] float _maxJumpTime = 0.5f;
     [SerializeField] float _fallDamage = 5f;
     [SerializeField] float _falYThreshold = -5f;
     [SerializeField] float _rotSpeed;
     [SerializeField] float _minSlopeAngleToBoostSpeed = 15f;
     [SerializeField] float _slopeForce;
-    [Tooltip("cant de segundos extras para saltar")]
+    [Tooltip("Cant. de segundos extras para saltar")]
     [SerializeField] float _maxTimeOutOfGroundToJump = .1f;
     [Tooltip("distancia extra mas arriba del piso por la cual consideramos que el jugador puede volver a saltar.")]
     [SerializeField] float _inputBufferingDistance = .5f;
+    [Tooltip("tiempo en el que la cámara vibra con el daño")]
+    [SerializeField] float _damageCamShakeTime = 0.1f;
     [SerializeField] KeyCode _jumpKey = KeyCode.Space;
     [SerializeField] LayerMask _groundLayer;
     [Header("References")]
@@ -44,8 +51,13 @@ public class Hamster : MonoBehaviour
     private bool isCoyoteTime;
     private float timerCoyote;
     bool _inputBufferWindow;
-    bool _jumped = false; //si el jugador acaba de saltar. Se pone en falso cuando toca la tierra de vuelta. Usado para el coyote time.
+    [Tooltip("Si el jugador acaba de saltar y está en el aire. Se pone en falso cuando toca la tierra de vuelta. Usado para el coyote time.")]
+    bool _jumped = false;
+    [Tooltip("Si el jugador acaba de saltar y está en el aire. Se pone en falso cuando suelta la tecla.")]
+    bool _jumpPress = false;
     bool _jumpWhenFloorIstouched;
+
+    float jumpTimeCounter;
 
     //Sound
     [SerializeField] AudioClip[] sounds;
@@ -78,8 +90,8 @@ public class Hamster : MonoBehaviour
         //Debug.Log($"Jumped {_jumped}");
         GroundCheck();
 
-        if (_rb.velocity.y > 8) _ballAnim.SetTrigger("Jump");
-        if (_rb.velocity.y < -5) _ballAnim.SetTrigger("Falling");
+        if (_rb.velocity.y > 4) _ballAnim.SetTrigger("Jump");
+        if (_rb.velocity.y < -4) _ballAnim.SetTrigger("Falling");
 
         if (_rb.velocity.magnitude > 18f && !_smokeParticles.isPlaying)
         {
@@ -126,6 +138,21 @@ public class Hamster : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyUp(_jumpKey))
+        {
+            if(_jumpPress)
+                _jumpPress = false;
+        }
+
+        if (_jumpPress)
+        {
+            if (jumpTimeCounter < _maxJumpTime)
+            {
+                jumpTimeCounter += Time.deltaTime; // Aumenta el contador.
+                _rb.AddForce(Vector3.up * _jumpForce * Time.deltaTime, ForceMode.Impulse); // Aplica fuerza de salto.
+            }
+        }
+
         if (_jumpWhenFloorIstouched && isGrounded)
         {
             PlayerJumed();
@@ -150,11 +177,13 @@ public class Hamster : MonoBehaviour
 
     void PlayerJumed()
     {
+        jumpTimeCounter = 0f;
         _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
         Debug.Log($"Acabo de saltar. Grounded {isGrounded}, isCoyoTeTime {isCoyoteTime}, jumped {_jumped}, timer coyote{timerCoyote}");
         isCoyoteTime = false;
         _jumped = true;
-        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+        _jumpPress = true;
+        _rb.AddForce(Vector3.up * _jumpInitialForce, ForceMode.Impulse);
     }
 
     void Movement()
@@ -207,6 +236,12 @@ public class Hamster : MonoBehaviour
         else
         {
             LevelManager.Instance.currentExtraTimerBeforeKill = 0;
+        }
+
+        //Camera Shake
+        if (LevelManager.Instance)
+        {
+            LevelManager.Instance.CameraShake(damage/5, _damageCamShakeTime);
         }
     }
 

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Cinemachine;
 
 public class LevelManager : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class LevelManager : MonoBehaviour
     public float AnxietyTimer { get; set; } //Ansiedad actual
 
     [SerializeField] float zenTier = .7f, chillTier = .4f, alertedTier = .1f;
+
+    //Camera
+    [SerializeField] CinemachineFreeLook mainCam;
 
     //Bubbles
     public int totalBubbles { get; set; }
@@ -184,7 +188,7 @@ public class LevelManager : MonoBehaviour
         Cursor.visible = true;
         _winScreen.SetActive(true);
 
-        _winScreen.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "¡Sobreviste! \n Y explotaste " + (totalBubbles - bubblesLeft) + "/" + totalBubbles + " burbujas.";
+        _winScreen.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "Â¡Sobreviste! \n Y explotaste " + (totalBubbles - bubblesLeft) + "/" + totalBubbles + " burbujas.";
     }
 
     public void WinConfetti()
@@ -206,6 +210,11 @@ public class LevelManager : MonoBehaviour
     {
         Cursor.visible = true;
         _deadScreen.SetActive(true);
+    }
+
+    public void CameraShake(float intensity, float time)
+    {
+        mainCam.GetComponent<CamShakeController>().CameraShake(intensity, time);
     }
 
     public Transform HamsterFace => hamsterStateFace.transform;

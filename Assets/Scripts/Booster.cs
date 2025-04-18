@@ -6,6 +6,9 @@ public class Booster : MonoBehaviour
 {
     [Header("Values")]
     [SerializeField] float _boostForce;
+    [Header("Camera Shake")]
+    float _camShakeIntensity;
+    [SerializeField] float _camShakeTime = 0.1f;
     Renderer _mat;
     float _offsetTime;
     
@@ -15,6 +18,7 @@ public class Booster : MonoBehaviour
     {
         _mat = GetComponentInChildren<Renderer>();
         anim = GetComponent<Animator>();
+        _camShakeIntensity = _boostForce/1000;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,6 +31,12 @@ public class Booster : MonoBehaviour
             AudioManager.instance.Play("Whoosh_Speed_3",.6f,Random.Range(1, 1.1f));
             if(anim) anim.Play(Animator.StringToHash("BoosterActivated"));
             //StartCoroutine(BoostEffect());
+
+            //Camera Shake
+            if (LevelManager.Instance)
+            {
+                LevelManager.Instance.CameraShake(_camShakeIntensity, _camShakeTime);
+            }
         }
     }
 

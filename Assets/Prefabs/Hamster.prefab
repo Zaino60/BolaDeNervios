@@ -132,7 +132,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 15
-  _jumpForce: 10
+  _jumpInitialForce: 8
+  _jumpForce: 12
+  _maxJumpTime: 0.5
   _fallDamage: 5
   _falYThreshold: -50
   _rotSpeed: 10
